@@ -16,9 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
+from core.usuario.router import router as usuario_router
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("api/", include(usuario_router.urls)),
 ]
