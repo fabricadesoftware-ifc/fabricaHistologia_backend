@@ -9,6 +9,8 @@ class Usuario(AbstractUser):
     username = None
     email = models.EmailField(_("e-mail address"), unique=True)
     passage_id = models.CharField(max_length=255, unique=True)
+    verification_token = models.CharField(max_length=100, blank=True, null=True)
+    is_verified = models.BooleanField(default=False)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []

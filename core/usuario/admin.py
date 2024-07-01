@@ -34,7 +34,7 @@ class CustomUserAdmin(UserAdmin):
         ),
         (
             _("Personal info"),
-            {"fields": ()},
+            {"fields": (["verification_token", "is_verified"])},
         ),
         (
             _("Permissions"),
