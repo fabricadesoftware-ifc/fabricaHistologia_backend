@@ -17,6 +17,11 @@ dependencies = [
     "openapi-python-client>=0.21.1",
     "dotenv>=0.0.5",
     "python-dotenv>=1.0.1",
+    "Pillow>=10.4.0",
+    "python-magic>=0.4.27; sys_platform == \"linux\"",
+    "python-magic-bin>=0.4.14; sys_platform == \"win32, darwin\"",
+    "django-extensions>=3.2.3",
+    "graphviz>=0.20.3",
 ]
 requires-python = "==3.11.*"
 readme = "README.md"
