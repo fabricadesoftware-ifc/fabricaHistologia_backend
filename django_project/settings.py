@@ -30,9 +30,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',
     "corsheaders",
     'rest_framework',
     'core.usuario',
+    'core.fabrica_histologia',
+    'core.uploader',
+    'core.quiz',
 ]
 
 MIDDLEWARE = [
@@ -144,3 +148,9 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'fabricahistologia@gmail.com'
 EMAIL_HOST_PASSWORD = 'xrnq bkut ihta symq'
+
+# App Uploader settings
+MEDIA_URL = "http://localhost:8000/media/"
+MEDIA_ENDPOINT = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
+FILE_UPLOAD_PERMISSIONS = 0o640
