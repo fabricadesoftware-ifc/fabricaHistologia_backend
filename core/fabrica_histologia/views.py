@@ -20,5 +20,5 @@ class SlideMicroscopyPostViewSet(ModelViewSet):
     queryset = SlideMicroscopyPost.objects.all()
 
     def get_serializer_class(self):
-        return SlideMicroscopyPost
+        return SlideMicroscopyPostViewSet
     http_method_names = ["get", "post", "put", "delete"]
