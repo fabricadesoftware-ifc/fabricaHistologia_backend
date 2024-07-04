@@ -35,3 +35,4 @@ class SlideMicroscopyPostDetailSerializer(serializers.ModelSerializer):
             "autor_user",
             "organ",
         ]
+        depth = 1
