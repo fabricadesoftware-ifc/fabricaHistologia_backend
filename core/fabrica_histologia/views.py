@@ -18,7 +18,7 @@ class SystemViewSet(ModelViewSet):
 @extend_schema(tags=["SlideMicroscopyPost"])
 class SlideMicroscopyPostViewSet(ModelViewSet):
     queryset = SlideMicroscopyPost.objects.all()
-
+    
     def get_serializer_class(self):
-        return SlideMicroscopyPostViewSet
+        return SlideMicroscopyPostDetailSerializer
     http_method_names = ["get", "post", "put", "delete"]
