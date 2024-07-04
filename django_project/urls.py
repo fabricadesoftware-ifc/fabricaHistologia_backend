@@ -18,15 +18,20 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from rest_framework.routers import DefaultRouter
 from core.usuario.router import router as usuario_router
 from core.usuario.views import verify_user
+from core.fabrica_histologia.views import SlideMicroscopyPostViewSet
 from core.uploader.router import router as uploader_router
 
+router = DefaultRouter()
+router.register(r"slides", SlideMicroscopyPostViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("api/", include(usuario_router.urls)),
-    path("api/verify-user/<str:verification_token>/", verify_user, name="verify-user"),
+    path('api/', include(router.urls)),
+    path("api/user/", include(usuario_router.urls)),
+    path("api/user/verify-user/<str:verification_token>/", verify_user, name="verify-user"),
     path("api/media/", include(uploader_router.urls)), 
 ]
 
