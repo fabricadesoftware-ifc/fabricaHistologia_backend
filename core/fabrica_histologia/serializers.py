@@ -36,3 +36,16 @@ class SlideMicroscopyPostDetailSerializer(serializers.ModelSerializer):
             "organ",
         ]
         depth = 1
+
+class SlideMicroscopyPostListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model: SlideMicroscopyPost
+        fields: list[str] = [
+            "species",
+            "image_slide",
+            "autor_user",
+            "organ",
+        ]
+        depth = 1
+
+
