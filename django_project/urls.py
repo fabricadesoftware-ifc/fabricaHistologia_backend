@@ -29,9 +29,9 @@ router.register(r"slides", SlideMicroscopyPostViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include(router.urls)),
-    path("api/user/", include(usuario_router.urls)),
-    path("api/user/verify-user/<str:verification_token>/", verify_user, name="verify-user"),
+    path('api/fabrica-histologia/', include(router.urls)),
+    path("api/", include(usuario_router.urls)),
+    path("api/verify-user/<str:verification_token>/", verify_user, name="verify-user"),
     path("api/media/", include(uploader_router.urls)), 
 ]
 
