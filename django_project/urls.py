@@ -21,10 +21,12 @@ from django.conf.urls.static import static
 from rest_framework.routers import DefaultRouter
 from core.usuario.router import router as usuario_router
 from core.usuario.views import verify_user
-from core.fabrica_histologia.views import SlideMicroscopyPostViewSet
+from core.fabrica_histologia.views import SystemViewSet, SlideMicroscopyPostViewSet
 from core.uploader.router import router as uploader_router
 
 router = DefaultRouter()
+
+router.register(r"systens", SystemViewSet)
 router.register(r"slides", SlideMicroscopyPostViewSet)
 
 urlpatterns = [
