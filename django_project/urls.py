@@ -28,15 +28,14 @@ from rest_framework.routers import DefaultRouter
 router = DefaultRouter()
 
 router.register(r"species", SpeciesViewSet)
-router.register(r"system", SystemViewSet)
+router.register(r"systems", SystemViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("api/", include(usuario_router.urls)),
     path("api/verify-user/<str:verification_token>/", verify_user, name="verify-user"),
     path("api/media/", include(uploader_router.urls)), 
-    path("", include(router.urls)),
-    path("api/", include(router.urls))
+    path("api/fabrica-histologia/", include(router.urls)),
 ]
 
 urlpatterns += static(settings.MEDIA_ENDPOINT, document_root=settings.MEDIA_ROOT)
