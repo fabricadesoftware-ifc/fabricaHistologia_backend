@@ -1,11 +1,5 @@
-
-from core.fabrica_histologia.models import System, Species
-from core.fabrica_histologia.models import SlideMicroscopyPost, System 
 from rest_framework import serializers
-
-# Create your serializers here
-
-# System serializer for listing methods
+from core.fabrica_histologia.models import System, Species, Points, SlideMicroscopyPost
 
 class SystemDetailSerializer(serializers.ModelSerializer):
     class Meta:
@@ -16,9 +10,7 @@ class SystemDetailSerializer(serializers.ModelSerializer):
             "description",
             "image_system",
         ]
-
-# System serializer for posting methods
-
+          
 class SystemWriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = System
@@ -28,9 +20,35 @@ class SystemWriteSerializer(serializers.ModelSerializer):
             "image_system",
         ]
 
-# Species serializer for listing methods
 
-class speciesDetailSerializer(serializers.ModelSerializer):
+class PointDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Points
+        fields: list[str] = [
+            "id",
+             "label_title",
+             "description",
+             "position",
+             "color",
+             "slide",
+             "analyzed_structures",
+             "analyzed_functions",
+        ] 
+
+class PointWriteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Points
+        fields: list[str] = [
+             "label_title",
+             "description",
+             "position",
+             "color",
+             "slide",
+             "analyzed_structures",
+             "analyzed_functions",
+        ] 
+
+class SpeciesDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Species
         fields: list[str] = [
@@ -39,9 +57,7 @@ class speciesDetailSerializer(serializers.ModelSerializer):
             "category"
         ]
 
-# Species serializer for posting methods
-
-class speciesWriteSerializer(serializers.ModelSerializer):
+class SpeciesWriteSerializer(serializers.ModelSerializer):
        class Meta:
         model = Species
         fields: list[str] = [
@@ -92,3 +108,4 @@ class SlideMicroscopyPostWriteSerializer(serializers.ModelSerializer):
             "organ",
         ]
         depth = 1
+
