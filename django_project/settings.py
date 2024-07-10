@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'core.usuario',
     'core.fabrica_histologia',
     'core.uploader',
+    'core.supporting_materials',
     'core.quiz',
 ]
 
