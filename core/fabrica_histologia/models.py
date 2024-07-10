@@ -27,14 +27,14 @@ class Organ(models.Model):
     )
     system = models.ForeignKey(System, on_delete=models.PROTECT)
 
-class Species(models.Model):
+class Specie(models.Model):
     name = models.CharField(max_length=255)
     category = models.CharField(max_length=255)
 
 class SlideMicroscopyPost(models.Model):
     date_analysis = models.DateField()
     post_date = models.DateField()
-    species = models.ForeignKey(Species, on_delete=models.PROTECT)
+    species = models.ForeignKey(Specie, on_delete=models.PROTECT)
     type_cut = models.CharField(max_length=255)
     increase = models.CharField(max_length=255)
     coloring = models.CharField(max_length=255)
@@ -49,7 +49,7 @@ class SlideMicroscopyPost(models.Model):
     autor_user = models.ForeignKey(User, on_delete=models.PROTECT)
     organ = models.ForeignKey(Organ, on_delete=models.PROTECT)
 
-class Points(models.Model):
+class Point(models.Model):
     label_title = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
     position = models.JSONField()

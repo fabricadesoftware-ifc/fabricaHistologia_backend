@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from core.fabrica_histologia.models import System, Species, Points, SlideMicroscopyPost
+from core.fabrica_histologia.models import System, Specie, Point, SlideMicroscopyPost
 
 class SystemDetailSerializer(serializers.ModelSerializer):
     class Meta:
@@ -23,7 +23,7 @@ class SystemWriteSerializer(serializers.ModelSerializer):
 
 class PointDetailSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Points
+        model = Point
         fields: list[str] = [
             "id",
              "label_title",
@@ -37,7 +37,7 @@ class PointDetailSerializer(serializers.ModelSerializer):
 
 class PointWriteSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Points
+        model = Point
         fields: list[str] = [
              "label_title",
              "description",
@@ -48,18 +48,18 @@ class PointWriteSerializer(serializers.ModelSerializer):
              "analyzed_functions",
         ] 
 
-class SpeciesDetailSerializer(serializers.ModelSerializer):
+class SpecieDetailSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Species
+        model = Specie
         fields: list[str] = [
             "id",
             "name",
             "category"
         ]
 
-class SpeciesWriteSerializer(serializers.ModelSerializer):
+class SpecieWriteSerializer(serializers.ModelSerializer):
        class Meta:
-        model = Species
+        model = Specie
         fields: list[str] = [
             "name",
             "category"
