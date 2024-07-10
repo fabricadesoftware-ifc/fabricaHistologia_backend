@@ -25,3 +25,32 @@ class Usuario(AbstractUser):
         verbose_name = "Usuário"
         verbose_name_plural = "Usuários"
         ordering = ["-date_joined"]
+
+
+class PersonalData(models.Model):
+    user = models.OneToOneField(Usuario, on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+    registration = models.CharField(max_length=20)
+    birth_date = models.DateField()
+    phone = models.CharField(max_length=20)
+    class education_level(models.TextChoices):
+        MEDIO = "Médio", _("Médio")
+        SUPERIOR = "Superior", _("Superior")
+        POS_GRADUACAO = "Pós-Graduação", _("Pós-Graduação")
+        MESTRADO = "Mestrado", _("Mestrado")
+        DOUTORADO = "Doutorado", _("Doutorado")
+        POS_DOUTORADO = "Pós-Doutorado", _("Pós-Doutorado")
+    education_level = models.CharField(
+        max_length=20,
+        choices=education_level.choices,
+        default=education_level.MEDIO,
+    )
+    
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "Dados Pessoais"
+        verbose_name_plural = "Dados Pessoais"
+        ordering = ["name"]
