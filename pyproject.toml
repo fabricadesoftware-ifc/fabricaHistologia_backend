@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "Default template for PDM package"
 authors = [
     {name = "lucasantonete@gmail.com", email = "lucasantonete@gmail.com"},
+    {name = "Gabz047", email = "gabe1612mail@gmail.com"},
 ]
 dependencies = [
     "django>=4.2.13",
