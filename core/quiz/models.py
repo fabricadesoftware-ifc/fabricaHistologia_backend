@@ -12,5 +12,7 @@ class Answer(models.Model):
     question = models.ForeignKey(Quiz, on_delete=models.CASCADE)
     option = models.TextField()
     correct = models.BooleanField()
+    comment_answer = models.TextField(default="")
+    
 
 
