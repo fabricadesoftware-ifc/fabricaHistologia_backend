@@ -45,6 +45,7 @@ class PersonalData(models.Model):
         choices=education_level.choices,
         default=education_level.MEDIO,
     )
+    university = models.CharField(max_length=255, blank=True, null=True)
     
 
     def __str__(self):

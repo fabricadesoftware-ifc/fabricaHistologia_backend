@@ -6,7 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view
 
 from core.usuario.models import Usuario as User
-from core.usuario.serializers import UsuarioSerializer
+from core.usuario.serializers import UsuarioSerializer, PersonalDataWriteSerializer, PersonalDataDetailSerializer, PersonalDataListSerializer
 
 class UserViewSet(ModelViewSet):
     queryset = User.objects.all().order_by("id")
@@ -33,3 +33,15 @@ def verify_user(request, verification_token):
     user.save()
 
     return Response({'message': 'Usuário verificado com sucesso'}, status=status.HTTP_200_OK)
+
+
+class PersonalDataViewSet(ModelViewSet):
+    queryset = User.objects.all().order_by("id")
+    serializer_class = PersonalDataWriteSerializer
+
+    def get_serializer_class(self):
+        if self.action in ["list"]:
+            return PersonalDataListSerializer
+        elif self.action in ["retrieve"]:
+            return PersonalDataDetailSerializer
+        return PersonalDataWriteSerializer
