@@ -1,6 +1,5 @@
-from core.fabrica_histologia.models import System
-from core.fabrica_histologia.models import Points
 from rest_framework import serializers
+from core.fabrica_histologia.models import System, Species, Points, SlideMicroscopyPost
 
 class SystemDetailSerializer(serializers.ModelSerializer):
     class Meta:
@@ -11,7 +10,7 @@ class SystemDetailSerializer(serializers.ModelSerializer):
             "description",
             "image_system",
         ]
-
+          
 class SystemWriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = System
@@ -20,6 +19,7 @@ class SystemWriteSerializer(serializers.ModelSerializer):
             "description",
             "image_system",
         ]
+
 
 class PointDetailSerializer(serializers.ModelSerializer):
     class Meta:
@@ -47,4 +47,65 @@ class PointWriteSerializer(serializers.ModelSerializer):
              "analyzed_structures",
              "analyzed_functions",
         ] 
+
+class SpeciesDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Species
+        fields: list[str] = [
+            "id",
+            "name",
+            "category"
+        ]
+
+class SpeciesWriteSerializer(serializers.ModelSerializer):
+       class Meta:
+        model = Species
+        fields: list[str] = [
+            "name",
+            "category"
+        ]
+
+class SlideMicroscopyPostDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SlideMicroscopyPost
+        fields: list[str] = [
+            "id",
+            "date_analysis",
+            "post_date",
+            "species",
+            "type_cut",
+            "increase",
+            "coloring",
+            "image_slide",
+            "autor_user",
+            "organ",
+        ]
+        depth = 1
+
+class SlideMicroscopyPostListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model: SlideMicroscopyPost
+        fields: list[str] = [
+            "species",
+            "image_slide",
+            "autor_user",
+            "organ",
+        ]
+        depth = 1
+
+class SlideMicroscopyPostWriteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SlideMicroscopyPost
+        fields: list[str] = [
+            "date_analysis",
+            "post_date",
+            "species",
+            "type_cut",
+            "increase",
+            "coloring",
+            "image_slide",
+            "autor_user",
+            "organ",
+        ]
+        depth = 1
 

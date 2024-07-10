@@ -4,8 +4,8 @@
 [metadata]
 groups = ["default"]
 strategy = ["cross_platform", "inherit_metadata"]
-lock_version = "4.4.1"
-content_hash = "sha256:4a70860d99afb9905476910484fd01ad61f1f2dbc7957e448a9165142b16a58c"
+lock_version = "4.4.2"
+content_hash = "sha256:321a8d6a11843d071c6ba0829ed0b5e6ff572ff5ffe98a3a2761d597af2ce292"
 
 [[package]]
 name = "aenum"
