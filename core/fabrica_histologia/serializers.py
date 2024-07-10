@@ -21,7 +21,21 @@ class SystemWriteSerializer(serializers.ModelSerializer):
             "image_system",
         ]
 
-class PointSerializer(serializers.ModelSerializer):
+class PointDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Points
+        fields: list[str] = [
+            "id",
+             "label_title",
+             "description",
+             "position",
+             "color",
+             "slide",
+             "analyzed_structures",
+             "analyzed_functions",
+        ] 
+
+class PointWriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Points
         fields: list[str] = [
