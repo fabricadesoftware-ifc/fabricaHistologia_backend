@@ -9,14 +9,16 @@ from core.uploader.router import router as uploader_router
 
 from core.fabrica_histologia.views import PointViewSet, SpeciesViewSet, SystemViewSet, SlideMicroscopyPostViewSet
 from core.quiz.views import AnswerViewSet, QuizViewSet
+from core.supporting_materials.views import SupportingMaterialViewSet
 
 router = DefaultRouter()
 router.register(r"species", SpeciesViewSet)
 router.register(r"systems", SystemViewSet)
 router.register(r"points", PointViewSet) 
-router.register(r"Slide", SlideMicroscopyPostViewSet)
+router.register(r"slide", SlideMicroscopyPostViewSet)
 router.register(r"quiz", QuizViewSet)
 router.register(r"answer", AnswerViewSet)
+router.register(r"supporting-material", SupportingMaterialViewSet)
 
 
 urlpatterns = [
