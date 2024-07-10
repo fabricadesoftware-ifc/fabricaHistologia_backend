@@ -1,4 +1,5 @@
 from core.fabrica_histologia.models import System
+from core.fabrica_histologia.models import Points
 from rest_framework import serializers
 
 class SystemDetailSerializer(serializers.ModelSerializer):
@@ -19,3 +20,17 @@ class SystemWriteSerializer(serializers.ModelSerializer):
             "description",
             "image_system",
         ]
+
+class PointSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Points
+        fields: list[str] = [
+             "label_title",
+             "description",
+             "position",
+             "color",
+             "slide",
+             "analyzed_structures",
+             "analyzed_functions",
+        ] 
+
