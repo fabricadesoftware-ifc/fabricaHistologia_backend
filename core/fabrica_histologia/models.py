@@ -14,6 +14,9 @@ class System(models.Model):
         default=None,
     )
 
+    def __str__(self) -> str:
+        return f"{self.name}"
+    
 class Organ(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
@@ -27,11 +30,18 @@ class Organ(models.Model):
     )
     system = models.ForeignKey(System, on_delete=models.PROTECT)
 
+    def __str__(self) -> str:
+        return f"{self.name}"
+
 class Specie(models.Model):
     name = models.CharField(max_length=255)
     category = models.CharField(max_length=255)
 
+    def __str__(self) -> str:
+        return f"{self.name}"
+
 class SlideMicroscopyPost(models.Model):
+    name = models.CharField(max_length=255)
     date_analysis = models.DateField()
     post_date = models.DateField()
     species = models.ForeignKey(Specie, on_delete=models.PROTECT)
@@ -48,6 +58,11 @@ class SlideMicroscopyPost(models.Model):
     )
     autor_user = models.ForeignKey(User, on_delete=models.PROTECT)
     organ = models.ForeignKey(Organ, on_delete=models.PROTECT)
+    verification_token = models.CharField(max_length=100, blank=True, null=True)
+    is_verified = models.BooleanField(default=False)
+
+    def __str__(self) -> str:
+        return f"{self.name}"
 
 class Point(models.Model):
     label_title = models.CharField(max_length=255)
@@ -57,6 +72,9 @@ class Point(models.Model):
     slide = models.ForeignKey(SlideMicroscopyPost, on_delete=models.PROTECT)
     analyzed_structures = models.CharField(max_length=255)
     analyzed_functions = models.CharField(max_length=255)
+
+    def __str__(self) -> str:
+        return f"{self.slide}"
 
 
 

@@ -6,6 +6,9 @@ from core.fabrica_histologia.serializers import SlideMicroscopyPostWriteSerializ
 
 from rest_framework.viewsets import ModelViewSet
 from drf_spectacular.utils import extend_schema
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
 
 # Create your views here.
 
@@ -51,3 +54,17 @@ class SlideMicroscopyPostViewSet(ModelViewSet):
             return SlideMicroscopyPostDetailSerializer
         return SlideMicroscopyPostWriteSerializer
     http_method_names = ["get", "post", "put", "delete"]
+
+@api_view(['GET'])
+def verify_slide_microscopy_post(request, verification_token):
+    try:
+        post  = SlideMicroscopyPost.objects.get(verification_token=verification_token)
+    except SlideMicroscopyPost.DoesNotExist:
+        return Response({'error': 'Token de verificação inválido'}, status=status.HTTP_404_NOT_FOUND)
+
+    # Marcar o usuário como verificado
+    post.is_verified = True
+    post.verification_token = None  # Limpar o token após verificação
+    post.save()
+
+    return Response({'message': 'Postagem verificada com sucesso'}, status=status.HTTP_200_OK)
