@@ -1,4 +1,5 @@
-from core.fabrica_histologia.models import System, Point, Specie, SlideMicroscopyPost
+from core.fabrica_histologia.models import Organ, System, Point, Specie, SlideMicroscopyPost
+from core.fabrica_histologia.serializers import OrganDetailSerializer, OrganWriteSerializer
 from core.fabrica_histologia.serializers import SystemDetailSerializer, SystemWriteSerializer
 from core.fabrica_histologia.serializers import PointDetailSerializer, PointWriteSerializer
 from core.fabrica_histologia.serializers import SpecieDetailSerializer, SpecieWriteSerializer
@@ -11,6 +12,16 @@ from drf_spectacular.utils import extend_schema
 
 #System view
 
+@extend_schema(tags=["Organ"])
+class OrganViewSet(ModelViewSet):
+    queryset = Organ.objects.all()
+
+    def get_serializer_class(self):
+        if self.action in ["list", "retrieve"]:
+            return OrganDetailSerializer
+        return OrganWriteSerializer
+    http_method_names = ["get", "post", "put", "delete"]
+
 @extend_schema(tags=["System"])
 class SystemViewSet(ModelViewSet):
     queryset = System.objects.all()
@@ -21,6 +32,7 @@ class SystemViewSet(ModelViewSet):
         return SystemWriteSerializer
     http_method_names = ["get", "post", "put", "delete"]
 
+@extend_schema(tags=["Point"])
 class PointViewSet(ModelViewSet):
     queryset = Point.objects.all()
 

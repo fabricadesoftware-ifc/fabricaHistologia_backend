@@ -7,11 +7,12 @@ from core.usuario.router import router as usuario_router
 from core.usuario.views import verify_user
 from core.uploader.router import router as uploader_router
 
-from core.fabrica_histologia.views import PointViewSet, SpeciesViewSet, SystemViewSet, SlideMicroscopyPostViewSet
+from core.fabrica_histologia.views import OrganViewSet, PointViewSet, SpeciesViewSet, SystemViewSet, SlideMicroscopyPostViewSet
 from core.quiz.views import AnswerViewSet, QuizViewSet
 from core.supporting_materials.views import SupportingMaterialViewSet
 
 router = DefaultRouter()
+router.register(r"organs", OrganViewSet)
 router.register(r"species", SpeciesViewSet)
 router.register(r"systems", SystemViewSet)
 router.register(r"points", PointViewSet) 
