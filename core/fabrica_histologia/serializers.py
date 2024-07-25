@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from core.fabrica_histologia.models import System, Specie, Point, SlideMicroscopyPost
+from core.fabrica_histologia.models import System, Specie, Point, SlideMicroscopyPost, Organ
 
 class SystemDetailSerializer(serializers.ModelSerializer):
     class Meta:
@@ -109,3 +109,23 @@ class SlideMicroscopyPostWriteSerializer(serializers.ModelSerializer):
         ]
         depth = 1
 
+class OrganWriteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Organ 
+        fields: list[str] = [
+            "name",
+            "description",
+            "image_organ",
+            "system",
+        ]
+
+class OrganDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Organ 
+        fields: list[str] = [
+            "id",
+            "name",
+            "description",
+            "image_organ",
+            "system",
+        ]
