@@ -1,39 +1,32 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.core.mail import send_mail
-from django.conf import settings
 from django.urls import reverse
+from asgiref.sync import async_to_sync
 from uuid import uuid4
 from core.usuario.models import Usuario
-from django_project.settings import EMAIL_HOST_USER
+from core.usuario.use_case.contributor_send_email_verification import contributor_send_email_verification
 
 @receiver(post_save, sender=Usuario)
-def send_verification_email(sender, instance, created, **kwargs):
+def contributor_verification(sender, instance, created, **kwargs):
+    """
+    Signal handler function that is triggered after a new 'Usuario' instance is saved.
+    It generates a verification token, saves it to the instance, and sends an email with a verification link.
+
+    Args:
+        sender: The sender of the signal.
+        instance: The 'Usuario' instance that was saved.
+        created: A boolean indicating if the instance was newly created.
+        **kwargs: Additional keyword arguments.
+    """
     if created:
-        # Gerar um token de verificação único
         token = str(uuid4())
         instance.verification_token = token
         instance.save()
 
-        # Construir o link de verificação com o token
         verify_url = reverse('verify-user', kwargs={'verification_token': token})
         print("verify_url: ", verify_url)
         verify_link = f'http://localhost:8000/{verify_url}'
 
-        print(EMAIL_HOST_USER)
-        # Enviar email para conta administradora
-        recipient_list = ['lucasantonete@hotmail.com']  
-        subject = 'Verificação de novo usuário'
-        from_email = "fabricahistologia@gmail.com"
-        print("EMAIL")
-        message = f'Um novo usuário com o email:"{instance.email}" foi registrado. Para verificar, clique no link a seguir: {verify_link}'
-        print("MESSAGE", message)
-        try:    
-            send_mail(
-                subject, 
-                message, 
-                recipient_list = recipient_list, 
-                from_email = from_email
-                ) 
-        except Exception as e:
-            print("nao foi porra nenhuma")
+        async_to_sync(contributor_send_email_verification)(instance, verify_link)
+
+

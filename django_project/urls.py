@@ -7,7 +7,9 @@ from core.usuario.router import router as usuario_router
 from core.usuario.views import verify_user
 from core.uploader.router import router as uploader_router
 
+
 from core.fabrica_histologia.views import OrganViewSet, PointViewSet, SpeciesViewSet, SystemViewSet, SlideMicroscopyPostViewSet
+from core.fabrica_histologia.views import PointViewSet, SpeciesViewSet, SystemViewSet, SlideMicroscopyPostViewSet, verify_slide_microscopy_post
 from core.quiz.views import AnswerViewSet, QuizViewSet
 from core.supporting_materials.views import SupportingMaterialViewSet
 
@@ -27,6 +29,7 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path("api/", include(usuario_router.urls)),
     path("api/verify-user/<str:verification_token>/", verify_user, name="verify-user"),
+    path("api/verify-post/<str:verification_token>/", verify_slide_microscopy_post, name="verify-post"),
     path("api/media/", include(uploader_router.urls)), 
 ]
 

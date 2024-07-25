@@ -27,7 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
-    "corsheaders",
+    'corsheaders',
     'rest_framework',
     'core.usuario',
     'core.fabrica_histologia',
