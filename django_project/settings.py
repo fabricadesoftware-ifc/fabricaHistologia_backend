@@ -27,8 +27,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
+    'django_celery_results',
     'corsheaders',
     'rest_framework',
+    "drf_spectacular",
     'core.usuario',
     'core.fabrica_histologia',
     'core.uploader',
@@ -77,6 +79,12 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 10,
 }
 
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Fabrica Histologia",
+    "DESCRIPTION": "API para gerenciamento do atlas de Histologia.",
+    "VERSION": "1.0.0",
+}
+
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
@@ -113,7 +121,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "America/Sao_Paulo"
 
 USE_I18N = True
 
@@ -151,3 +159,10 @@ MEDIA_URL = "http://localhost:8000/media/"
 MEDIA_ENDPOINT = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 FILE_UPLOAD_PERMISSIONS = 0o640
+
+
+CELERY_TIMEZONE = "America/Sao_Paulo"
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
+CELERY_BROKER_URL = 'amqp://lucas:240600@localhost:5672/fabricahistologia'
+CELERY_RESULT_BACKEND = 'rpc://'

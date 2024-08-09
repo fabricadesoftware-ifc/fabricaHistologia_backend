@@ -1,9 +1,8 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.urls import reverse
-from asgiref.sync import async_to_sync
 from uuid import uuid4
-from core.fabrica_histologia.use_case.slide_microscopy_send_email_validation import slide_microscopy_send_email_validation
+from core.fabrica_histologia.tasks.slide_microscopy_send_email_validation import slide_microscopy_send_email_validation
 from core.fabrica_histologia.models import SlideMicroscopyPost
 
 @receiver(post_save, sender=SlideMicroscopyPost)
@@ -22,12 +21,14 @@ def slide_microscopy_post_verification(sender, instance, created, **kwargs ):
     - kwargs: Additional keyword arguments.
     """
     if created:
-        email_user = instance.autor_user
-        
+
         token = str(uuid4())
         instance.verification_token = token
         instance.save()
 
+        slide_post_id = instance.id
+
         verify_url = reverse('verify-post', kwargs={'verification_token': token})
 
-        async_to_sync(slide_microscopy_send_email_validation)(instance, verify_url, email_user)
+
+        slide_microscopy_send_email_validation.delay(slide_post_id, verify_url)

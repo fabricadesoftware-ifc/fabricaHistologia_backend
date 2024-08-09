@@ -59,10 +59,13 @@ class SlideMicroscopyPost(models.Model):
     autor_user = models.ForeignKey(User, on_delete=models.PROTECT)
     organ = models.ForeignKey(Organ, on_delete=models.PROTECT)
     verification_token = models.CharField(max_length=100, blank=True, null=True)
-    is_verified = models.BooleanField(default=False)
+    is_verified = models.BooleanField(default=False)  
+
 
     def __str__(self) -> str:
         return f"{self.name}"
+
+    
 
 class Point(models.Model):
     label_title = models.CharField(max_length=255)

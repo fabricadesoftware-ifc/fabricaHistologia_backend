@@ -1,10 +1,9 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.urls import reverse
-from asgiref.sync import async_to_sync
 from uuid import uuid4
 from core.usuario.models import Usuario
-from core.usuario.use_case.contributor_send_email_verification import contributor_send_email_verification
+from core.usuario.tasks.contributor_send_email_verification import contributor_send_email_verification
 
 @receiver(post_save, sender=Usuario)
 def contributor_verification(sender, instance, created, **kwargs):
@@ -24,9 +23,15 @@ def contributor_verification(sender, instance, created, **kwargs):
         instance.save()
 
         verify_url = reverse('verify-user', kwargs={'verification_token': token})
-        print("verify_url: ", verify_url)
-        verify_link = f'http://localhost:8000/{verify_url}'
+      
 
-        async_to_sync(contributor_send_email_verification)(instance, verify_link)
+        id_user = instance.id
+
+        print("id_user: ", id_user)
+        try: 
+            print("Enviando email de verificação")
+            contributor_send_email_verification.delay(id_user, verify_url)
+        except: 
+            print("Erro ao enviar email de verificação")
 
 

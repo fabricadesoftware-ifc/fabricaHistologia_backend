@@ -11,6 +11,7 @@ class SystemDetailSerializer(serializers.ModelSerializer):
             "image_system",
         ]
           
+
 class SystemWriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = System
@@ -84,7 +85,7 @@ class SlideMicroscopyPostDetailSerializer(serializers.ModelSerializer):
 
 class SlideMicroscopyPostListSerializer(serializers.ModelSerializer):
     class Meta:
-        model: SlideMicroscopyPost
+        model = SlideMicroscopyPost
         fields: list[str] = [
             "species",
             "image_slide",

@@ -1,15 +1,17 @@
-import asyncio
 from django.core.mail import send_mail
 from django_project.settings import EMAIL_HOST_USER
-from django.urls import reverse
+from celery import shared_task
+from core.fabrica_histologia.models import SlideMicroscopyPost
 
+@shared_task
+def slide_microscopy_send_email_validation(slide_post_id, verify_url):
+    print('Sending email...')
+    instance = SlideMicroscopyPost.objects.get(id=slide_post_id)
 
-async def slide_microscopy_send_email_validation(instance, verify_url, email_user):
-    await asyncio.sleep(1)
-    
     verify_link = f'http://localhost:8000{verify_url}'
 
-    email_user = email_user
+    email_user = instance.autor_user
+    
     recipient_list = ['lucasantonete@hotmail.com']
     subject = 'Verificação de nova postagem no projeto de histologia'
     message = (

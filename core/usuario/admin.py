@@ -51,6 +51,7 @@ class CustomUserAdmin(UserAdmin):
                     "email",
                     "password1",
                     "password2",
+                    "passage_id",
                     "is_staff",
                     "is_active",
                     "groups",
