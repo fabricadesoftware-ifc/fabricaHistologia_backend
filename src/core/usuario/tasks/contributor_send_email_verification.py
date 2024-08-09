@@ -7,6 +7,7 @@ from core.usuario.models import Usuario
 def contributor_send_email_verification(id_user, verify_url):
 
     instance = Usuario.objects.get(id=id_user)
+    
     user_email = instance.email
 
     verify_link = f'http://localhost:8000{verify_url}'
