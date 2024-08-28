@@ -30,6 +30,10 @@ sudo systemctl enable rabbitmq-server
 ## Para rodar o RabbitMQ e o Celery: 
 
 ```powershell
+export PYTHONPATH=$(pwd)/src
+```
+
+```powershell
  pdm run celery -A django_project worker --loglevel=info
 ```
 
