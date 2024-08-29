@@ -73,8 +73,8 @@ WSGI_APPLICATION = 'django_project.wsgi.application'
 
 
 REST_FRAMEWORK = {
-    # "DEFAULT_AUTHENTICATION_CLASSES": ("core.user.authentication.TokenAuthentication",),
-    # "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticatedOrReadOnly",),
+    "DEFAULT_AUTHENTICATION_CLASSES": ("core.user.authentication.TokenAuthentication",),
+    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticatedOrReadOnly",),
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "PAGE_SIZE": 10,
@@ -143,19 +143,19 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = "user.User"
 
 
-PASSAGE_APP_ID = '2TXjjhFWhntb7WqVkG46xAmb'
-PASSAGE_API_KEY = 'WG7v8fQtFx.eQpT8x7cBDY3NITVXUGLgEDWSg4eNUGDKzlFIRBfg7P7fUROLPpkgANHLGhCYesq'
-PASSAGE_AUTH_STRATEGY = 2
+PASSAGE_APP_ID: str = '2TXjjhFWhntb7WqVkG46xAmb'
+PASSAGE_API_KEY: str = 'WG7v8fQtFx.eQpT8x7cBDY3NITVXUGLgEDWSg4eNUGDKzlFIRBfg7P7fUROLPpkgANHLGhCYesq'
+PASSAGE_AUTH_STRATEGY: int = 2
 
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'fabricahistologia@gmail.com'
-EMAIL_HOST_PASSWORD = 'xrnq bkut ihta symq'
-EMAIL_RECEIVER_HISTOLOGY_USER = "lucasantonete@hotmail.com"
-EMAIL_RECEIVER_PATHOLOGY_USER = "marcusviniciusgraciano04@gmail.com"
+EMAIL_BACKEND: str = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST: str = 'smtp.gmail.com'
+EMAIL_PORT: int = 587
+EMAIL_USE_TLS: bool = True
+EMAIL_HOST_USER: str = 'fabricahistologia@gmail.com'
+EMAIL_HOST_PASSWORD: str = 'xrnq bkut ihta symq'
+EMAIL_RECEIVER_HISTOLOGY_USER: str = "lucasantonete@hotmail.com"
+EMAIL_RECEIVER_PATHOLOGY_USER: str = "marcusviniciusgraciano04@gmail.com"
 
 # App Uploader settings
 MEDIA_URL = "http://localhost:8000/media/"
@@ -164,8 +164,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 FILE_UPLOAD_PERMISSIONS = 0o640
 
 
-CELERY_TIMEZONE = "America/Sao_Paulo"
-CELERY_TASK_TRACK_STARTED = True
-CELERY_TASK_TIME_LIMIT = 30 * 60
-CELERY_BROKER_URL = 'amqp://lucas:240600@localhost:5672/fabricahistologia'
-CELERY_RESULT_BACKEND = 'rpc://'
+CELERY_TIMEZONE: str = "America/Sao_Paulo"
+CELERY_TASK_TRACK_STARTED: bool = True
+CELERY_TASK_TIME_LIMIT: int = 30 * 60
+CELERY_BROKER_URL: str = 'amqp://lucas:240600@localhost:5672/fabricahistologia'
+CELERY_RESULT_BACKEND: str = 'rpc://'

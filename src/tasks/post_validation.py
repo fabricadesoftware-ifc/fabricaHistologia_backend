@@ -10,10 +10,9 @@ from uuid import uuid4
 @shared_task
 def post_validation(slide_post_id, EMAIL_RECEIVER_USER, user_id):
     print('Sending email...')
-    instance = Posts.objects.get(id=slide_post_id)
-
-    user = User.objects.get(id=user_id)
-    personal_data = PersonalData.objects.get(user=user)
+    instance: object = Posts.objects.get(id=slide_post_id)
+    user: object = User.objects.get(id=user_id)
+    personal_data: object = PersonalData.objects.get(user=user)
 
     token = str(uuid4())
     instance.verification_token = token
@@ -24,11 +23,11 @@ def post_validation(slide_post_id, EMAIL_RECEIVER_USER, user_id):
 
     verify_link = f'http://localhost:8000{verify_url}'
 
-    email_user = instance.autor_user
-    from_email = EMAIL_HOST_USER
+    email_user: str = instance.autor_user
+    from_email: str = EMAIL_HOST_USER
 
-    recipient_list = [EMAIL_RECEIVER_USER]
-    subject = 'Verificação de nova postagem'
+    recipient_list: list[str] = [EMAIL_RECEIVER_USER]
+    subject: str = 'Verificação de nova postagem'
     message = (
         f'Uma nova postagem foi realizada por um colaborador. '
         f'Para verificar, clique no link a seguir: {verify_link}\n'
