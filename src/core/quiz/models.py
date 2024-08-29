@@ -1,5 +1,5 @@
 from django.db import models
-from core.fabrica_histologia.models import System
+from core.veterinary.models import System
 
 # Create your models here.
 

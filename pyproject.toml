@@ -42,7 +42,7 @@ dev = "python src/manage.py runserver localhost:8000"
 runserver = "python src/manage.py runserver"
 createsuperuser = "python src/manage.py createsuperuser"
 migrate = "python src/manage.py migrate"
-makemigrations = "python manage.py makemigrations"
-celery = "celery -A src.django_project worker -l info"
+makemigrations = "python src/manage.py makemigrations"
+celery = "celery -A django_project worker -l info"
 
 

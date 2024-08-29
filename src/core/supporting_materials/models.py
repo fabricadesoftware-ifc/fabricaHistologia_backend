@@ -1,6 +1,6 @@
 from django.db import models
 from core.uploader.models import Image, Document
-from core.fabrica_histologia.models import System
+from core.veterinary.models import System
 # Create your models here.
 
 class SupportingMaterial(models.Model):

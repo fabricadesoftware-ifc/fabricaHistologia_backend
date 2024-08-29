@@ -31,8 +31,9 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     "drf_spectacular",
-    'core.usuario',
-    'core.fabrica_histologia',
+    'core.user',
+    'core.posts',
+    'core.veterinary',
     'core.uploader',
     'core.supporting_materials',
     'core.quiz',
@@ -72,8 +73,8 @@ WSGI_APPLICATION = 'django_project.wsgi.application'
 
 
 REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": ("core.usuario.authentication.TokenAuthentication",),
-    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticatedOrReadOnly",),
+    # "DEFAULT_AUTHENTICATION_CLASSES": ("core.user.authentication.TokenAuthentication",),
+    # "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticatedOrReadOnly",),
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "PAGE_SIZE": 10,
@@ -139,7 +140,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = "usuario.Usuario"
+AUTH_USER_MODEL = "user.User"
 
 
 PASSAGE_APP_ID = '2TXjjhFWhntb7WqVkG46xAmb'
@@ -153,6 +154,8 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'fabricahistologia@gmail.com'
 EMAIL_HOST_PASSWORD = 'xrnq bkut ihta symq'
+EMAIL_RECEIVER_HISTOLOGY_USER = "lucasantonete@hotmail.com"
+EMAIL_RECEIVER_PATHOLOGY_USER = "marcusviniciusgraciano04@gmail.com"
 
 # App Uploader settings
 MEDIA_URL = "http://localhost:8000/media/"
