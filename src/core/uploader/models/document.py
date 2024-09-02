@@ -10,7 +10,7 @@ def document_file_path(document, _) -> str:
     content_type = get_content_type(document.file)
     extension: str = mimetypes.guess_extension(content_type)
 
-    return f"documents/{document.public_id}{extension or ''}"
+    return f"vet/files/{document.public_id}{extension or ''}"
 
 
 class Document(models.Model):

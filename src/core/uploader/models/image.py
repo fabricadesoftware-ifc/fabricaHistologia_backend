@@ -8,7 +8,8 @@ def image_file_path(image, _) -> str:
     extension: str = mimetypes.guess_extension(image.file.file.content_type)
     if extension == ".jpe":
         extension = ".jpg"
-    return f"images/{image.public_id}{extension or ''}"
+        
+    return f"vet/images/{image.public_id}{extension or ''}"
 
 
 class Image(models.Model):

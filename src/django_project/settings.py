@@ -1,6 +1,6 @@
-
 from pathlib import Path
 import os
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -10,6 +10,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-(a05as7xwtkh*%z3jz=fon$5z!3s*g19#p01f$f5b&1sgqe6m0'
+
+MODE = "MIGRATE"
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -26,6 +29,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary_storage',
+    'cloudinary',
     'django_extensions',
     'django_celery_results',
     'corsheaders',
@@ -41,6 +46,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
@@ -132,7 +138,33 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+
+# App Uploader/Cloudinary settings
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dzdrwmug3',
+    'API_KEY': '741644777853926',
+    'API_SECRET': 'UvCHKnDuW0NhXZfXgLtOptBmTtc',
+    'PREFIX': 'vet',
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+
+if MODE in ["PRODUCTION", "MIGRATE"]:
+    CLOUDINARY_URL = "cloudinary://741644777853926:UvCHKnDuW0NhXZfXgLtOptBmTtc@dzdrwmug3"
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+    STATIC_ROOT = os.path.join(BASE_DIR, "static")
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    MEDIA_URL = '/images/'
+else:
+    MY_IP = "127.0.0.1"
+    MEDIA_URL = f"http://{MY_IP}:19003/images/"
+
+MEDIA_ENDPOINT = "/images/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "images/")
+FILE_UPLOAD_PERMISSIONS = 0o640
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -156,13 +188,6 @@ EMAIL_HOST_USER: str = 'fabricahistologia@gmail.com'
 EMAIL_HOST_PASSWORD: str = 'xrnq bkut ihta symq'
 EMAIL_RECEIVER_HISTOLOGY_USER: str = "lucasantonete@hotmail.com"
 EMAIL_RECEIVER_PATHOLOGY_USER: str = "marcusviniciusgraciano04@gmail.com"
-
-# App Uploader settings
-MEDIA_URL = "http://localhost:8000/media/"
-MEDIA_ENDPOINT = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
-FILE_UPLOAD_PERMISSIONS = 0o640
-
 
 CELERY_TIMEZONE: str = "America/Sao_Paulo"
 CELERY_TASK_TRACK_STARTED: bool = True
