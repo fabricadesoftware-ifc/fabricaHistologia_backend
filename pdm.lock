@@ -5,7 +5,7 @@
 groups = ["default"]
 strategy = ["cross_platform", "inherit_metadata"]
 lock_version = "4.4.2"
-content_hash = "sha256:c3ab034b4783965cff9d07a400a5c1285de9de247c232c30f74376eaed73f02c"
+content_hash = "sha256:3cf73c57ae87e3eb2cb8a72d192b3a21501439559d1a9cdc3db38ef090b9949b"
 
 [[package]]
 name = "aenum"
@@ -253,6 +253,20 @@ files = [
 ]
 
 [[package]]
+name = "cloudinary"
+version = "1.41.0"
+summary = "Python and Django SDK for Cloudinary"
+groups = ["default"]
+dependencies = [
+    "certifi",
+    "six",
+    "urllib3>=1.26.5",
+]
+files = [
+    {file = "cloudinary-1.41.0.tar.gz", hash = "sha256:e189739a796a7d2ad15c19971741d33a9300816b16c0282b4b14ccf1dd2948c0"},
+]
+
+[[package]]
 name = "colorama"
 version = "0.4.6"
 requires_python = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,!=3.6.*,>=2.7"
@@ -336,6 +350,20 @@ dependencies = [
 files = [
     {file = "django_celery_results-2.5.1-py3-none-any.whl", hash = "sha256:0da4cd5ecc049333e4524a23fcfc3460dfae91aa0a60f1fae4b6b2889c254e01"},
     {file = "django_celery_results-2.5.1.tar.gz", hash = "sha256:3ecb7147f773f34d0381bac6246337ce4cf88a2ea7b82774ed48e518b67bb8fd"},
+]
+
+[[package]]
+name = "django-cloudinary-storage"
+version = "0.3.0"
+summary = "Django package that provides Cloudinary storages for both media and static files as well as management commands for removing unnecessary files."
+groups = ["default"]
+dependencies = [
+    "cloudinary>=1.4.0",
+    "requests>=2.10.0",
+]
+files = [
+    {file = "django-cloudinary-storage-0.3.0.tar.gz", hash = "sha256:debd403a5f225c9d35c4af508ff4abc7fdc262129464134b60b2feeb2c44d3e1"},
+    {file = "django_cloudinary_storage-0.3.0-py3-none-any.whl", hash = "sha256:95c855c7334141b2a485ea7eb5716de87bb6ce0d848e205debb3a3ab7bbbd49a"},
 ]
 
 [[package]]
