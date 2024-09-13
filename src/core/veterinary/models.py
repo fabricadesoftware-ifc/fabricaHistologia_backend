@@ -4,7 +4,7 @@ from core.uploader.models import Image
 class System(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
-    image_system = models.ForeignKey(
+    image = models.ForeignKey(
         Image,
         related_name="+",
         on_delete=models.CASCADE,
@@ -19,7 +19,7 @@ class System(models.Model):
 class Organ(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
-    image_organ = models.ForeignKey(
+    image = models.ForeignKey(
         Image,
         related_name="+",
         on_delete=models.CASCADE,
