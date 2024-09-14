@@ -4,13 +4,18 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 
+from django_filters.rest_framework import DjangoFilterBackend
+
 from core.posts.models import Posts, Point
 from core.posts.serializers import PointRetriveSerializer, PointWriteSerializer
 from core.posts.serializers import PostsWriteSerializer, PostsListSerializer, PostsRetriveSerializer
+from core.posts.filters import PostFilter
 
 @extend_schema(tags=["Posts"])
 class PostsViewSet(ModelViewSet):
     queryset = Posts.objects.all()
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = PostFilter
     
     def get_serializer_class(self):
         if self.action in ["list"]:            

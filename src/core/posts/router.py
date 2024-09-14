@@ -5,5 +5,5 @@ from core.posts.views import PointViewSet, PostsViewSet
 router = DefaultRouter()
 
 router.register(r"points", PointViewSet)
-router.register(r"slide", PostsViewSet)
+router.register(r"posts", PostsViewSet)
 
