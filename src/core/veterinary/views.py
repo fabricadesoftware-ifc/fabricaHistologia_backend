@@ -1,14 +1,19 @@
 from rest_framework.viewsets import ModelViewSet
 from drf_spectacular.utils import extend_schema
 
+from django_filters.rest_framework import DjangoFilterBackend
+
 from core.veterinary.models import Organ, System, Specie
 from core.veterinary.serializers import OrganDetailSerializer, OrganWriteSerializer
 from core.veterinary.serializers import SystemDetailSerializer, SystemWriteSerializer
 from core.veterinary.serializers import SpecieDetailSerializer, SpecieWriteSerializer
+from core.veterinary.filters import OrganFilter 
 
 @extend_schema(tags=["Organ"])
 class OrganViewSet(ModelViewSet):
     queryset = Organ.objects.all()
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = OrganFilter 
 
     def get_serializer_class(self):
         if self.action in ["list", "retrieve"]:

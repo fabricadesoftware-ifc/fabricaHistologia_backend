@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'core.uploader',
     'core.supporting_materials',
     'core.quiz',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -81,6 +82,7 @@ WSGI_APPLICATION = 'django_project.wsgi.application'
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": ("core.user.authentication.TokenAuthentication",),
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticatedOrReadOnly",),
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "PAGE_SIZE": 10,
