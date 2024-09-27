@@ -24,3 +24,6 @@ class SupportingMaterial(models.Model):
     )
     field_name = models.URLField(max_length=200)
     system = models.ForeignKey(System, on_delete=models.PROTECT)
+
+    def __str__(self) -> str:
+        return f"{self.name}"

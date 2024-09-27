@@ -33,5 +33,7 @@ class SupportingMaterialListSerializer(ModelSerializer):
             "name",
             "description",
             "field_name",
+            "document_supporting_material",
+            "image_supporting_material",
             "system"
         ]
