@@ -188,11 +188,11 @@ EMAIL_PORT: int = 587
 EMAIL_USE_TLS: bool = True
 EMAIL_HOST_USER: str = 'fabricahistologia@gmail.com'
 EMAIL_HOST_PASSWORD: str = 'xrnq bkut ihta symq'
-EMAIL_RECEIVER_HISTOLOGY_USER: str = "lucasantonete@hotmail.com"
+EMAIL_RECEIVER_HISTOLOGY_USER: str = "joaovssouza59@gmail.com"
 EMAIL_RECEIVER_PATHOLOGY_USER: str = "marcusviniciusgraciano04@gmail.com"
 
 CELERY_TIMEZONE: str = "America/Sao_Paulo"
 CELERY_TASK_TRACK_STARTED: bool = True
 CELERY_TASK_TIME_LIMIT: int = 30 * 60
-CELERY_BROKER_URL: str = 'amqp://lucas:240600@localhost:5672/fabricahistologia'
+CELERY_BROKER_URL: str = 'amqp://jaotarzan:Batata_12@localhost:5672/fabricahistologia'
 CELERY_RESULT_BACKEND: str = 'rpc://'
