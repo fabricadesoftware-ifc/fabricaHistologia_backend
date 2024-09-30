@@ -55,8 +55,14 @@ class PostsListSerializer(serializers.ModelSerializer):
             "image",
             "autor_user",
             "organ",
-            "type_post"
+            "type_post",
+            "increase",
+            "type_cut",
+            "name",
+            "post_date"
         ]
+        depth = 2
+
       
 
 class PostsWriteSerializer(serializers.ModelSerializer):
