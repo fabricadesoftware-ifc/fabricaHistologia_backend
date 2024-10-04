@@ -5,8 +5,11 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view
 
-from core.user.models import User
+from django_filters.rest_framework import DjangoFilterBackend
+
+from core.user.models import User, PersonalData
 from core.user.serializers import UserSerializer, PersonalDataWriteSerializer, PersonalDataDetailSerializer, PersonalDataListSerializer
+from core.user.filters import PersonalDataFilter
 
 class UserViewSet(ModelViewSet):
     queryset = User.objects.all().order_by("id")
@@ -36,8 +39,10 @@ def verify_user(request, verification_token):
 
 
 class PersonalDataViewSet(ModelViewSet):
-    queryset = User.objects.all().order_by("id")
+    queryset = PersonalData.objects.all().order_by("id")
     serializer_class = PersonalDataWriteSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = PersonalDataFilter
 
     def get_serializer_class(self):
         if self.action in ["list"]:
