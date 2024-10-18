@@ -1,4 +1,4 @@
-[
+quizzes = [
   {
     "id": 1,
     "question": "Qual das seguintes opções NÃO é uma função do aparelho respiratório?",
@@ -363,156 +363,156 @@
     "id": 61,
     "question": "Qual camada é encontrada o epitélio e a lâmina própria em vários órgãos?",
     "level": "medium",
-    "system_id": 2
+    "system_id": 7
   },
   {
     "id": 62,
     "question": "Qual característica é observada no esôfago de cães?",
     "level": "medium",
-    "system_id": 2
+    "system_id": 7
   },
   {
     "id": 63,
     "question": "Em que parte do esôfago dos cães é observada a ausência de muscular da mucosa?",
     "level": "medium",
-    "system_id": 2
+    "system_id": 7
   },
   {
     "id": 64,
     "question": "Qual dos seguintes tecidos não está presente na composição das camadas do esôfago?",
     "level": "medium",
-    "system_id": 2
+    "system_id": 7
   },
   {
     "id": 65,
     "question": "Qual característica histológica específica é encontrada na bexiga?",
     "level": "medium",
-    "system_id": 2
+    "system_id": 7
   },
   {
     "id": 66,
     "question": "Qual a principal função da lâmina basal no epitélio?",
     "level": "medium",
-    "system_id": 2
+    "system_id": 7
   },
   {
     "id": 67,
     "question": "Qual a principal diferença entre o epitélio da bexiga e o epitélio do esôfago em cães?",
     "level": "medium",
-    "system_id": 2
+    "system_id": 7
   },
   {
     "id": 68,
     "question": "Qual a função da muscular da mucosa no trato gastrointestinal?",
     "level": "medium",
-    "system_id": 2
-  }
+    "system_id": 7
+  },
   {
     "id": 69,
     "question": "Sobre as papilas linguais assinale a alternativa correta",
     "level": "medium",
-    "system_id": 3
+    "system_id": 8
   },
   {
     "id": 70,
     "question": "Sobre a cavidade oral assinale a alternativa incorreta",
     "level": "medium",
-    "system_id": 3
+    "system_id": 8
   },
   {
     "id": 71,
     "question": "Complete as lacunas: A túnica mucosa do esôfago é revestida por um epitélio ________ _________ que pode apresentar diferentes graus de ________",
     "level": "medium",
-    "system_id": 3
+    "system_id": 8
   },
   {
     "id": 72,
     "question": "O estômago é responsável pela digestão química. Sobre esse órgão responda a alternativa correta",
     "level": "medium",
-    "system_id": 3
+    "system_id": 8
   },
   {
     "id": 73,
     "question": "Sobre as fossetas gástricas, assinale a correta:",
     "level": "medium",
-    "system_id": 3
+    "system_id": 8
   },
   {
     "id": 74,
     "question": "Sobre o rumen, responda a alternativa correta",
     "level": "medium",
-    "system_id": 3
+    "system_id": 8
   },
   {
     "id": 75,
     "question": "Sobre as estruturas importantes para o intestino delgado, assinale a alternativa incorreta",
     "level": "medium",
-    "system_id": 3
+    "system_id": 8
   },
   {
     "id": 76,
     "question": "Complete as lacunas: O estroma inclui a Cápsula de ______, formada por tecido _____denso e rico em fibras elásticas, revestida por túnica _______",
     "level": "medium",
-    "system_id": 3
+    "system_id": 8
   },
   {
     "id": 77,
     "question": "Sobre o sistema biliar assinale a alternativa incorreta",
     "level": "medium",
-    "system_id": 3
+    "system_id": 8
   },
   {
     "id": 78,
     "question": "Sobre o pâncreas complete as lacunas: As células _______ estão localizadas no centro dos ácinos e têm formato________. Elas são responsáveis pela secreção de bicarbonato e água, e sua função é regulada pelas células ______do intestino delgado, como a secretina, que reage ao aumento da acidez do quimo.",
     "level": "medium",
-    "system_id": 3
+    "system_id": 8
   },
   {
     "id": 79,
     "question": "Sobre os componentes do sistema locomotor, assinale a alternativa correta",
     "level": "medium",
-    "system_id": 4
+    "system_id": 9
   },
   {
     "id": 80,
     "question": "I- A ossificação intramembranosa ocorre principalmente nos ossos planos do corpo, como na formação da clavícula II- O crescimento ósseo ocorre por meio de dois processos principais e o processo não varia de acordo com o tipo de osso III- O osso cortical proporciona força e suporte estrutural IV-A reabsorção óssea dos ossos longos ocorre na face interna do osso Estão corretas",
     "level": "medium",
-    "system_id": 4
+    "system_id": 9
   },
   {
     "id": 81,
     "question": "A ossificação a partir de um molde de cartilagem é denominada:",
     "level": "medium",
-    "system_id": 4
+    "system_id": 9
   },
   {
     "id": 82,
     "question": "O tecido _______ é a origem da cartilagem durante o desenvolvimento embrionário. A alternativa que melhor completa a lacuna é",
     "level": "medium",
-    "system_id": 4
+    "system_id": 9
   },
   {
     "id": 83,
     "question": "Sobre os hormônios envolvidos no crescimento ósseo, o que inibe o crescimento endocondral reduzindo a ossificação dos discos epifisários, que são responsáveis pelo crescimento em comprimento dos ossos longos é denominado:",
     "level": "medium",
-    "system_id": 4
+    "system_id": 9
   },
   {
     "id": 84,
     "question": "Você está examinando uma lâmina histológica de cartilagem fibrosa retirada de um cão da raça Dachshund. Com base nas características microscópicas desse tecido, assinale a alternativa correta:",
     "level": "medium",
-    "system_id": 4
+    "system_id": 9
   },
   {
     "id": 85,
     "question": "Nos ossos _______, como os ossos da pelve e vértebras, existem vários centros de ossificação, que aparecem em diferentes locais ao longo do desenvolvimento. A alternativa que melhor completa a lacuna é:",
     "level": "medium",
-    "system_id": 4
+    "system_id": 9
   },
   {
     "id": 86,
     "question": "A sequência que melhor define o processo de regeneração óssea é:",
     "level": "medium",
-    "system_id": 4
+    "system_id": 9
   }
 ]
