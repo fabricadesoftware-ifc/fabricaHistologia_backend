@@ -6,6 +6,7 @@ class QuizDetailSerializer(ModelSerializer):
         model = Quiz
         fields: list[str] = [
             "id",
+            "title",
             "question",
             "level",
             "system"
@@ -15,6 +16,7 @@ class QuizWriteSerializer(ModelSerializer):
     class Meta:
         model = Quiz
         fields: list[str] = [
+            "title",
             "question",
             "level",
             "system"
