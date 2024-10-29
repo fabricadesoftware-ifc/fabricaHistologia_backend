@@ -31,7 +31,7 @@ class PointWriteSerializer(serializers.ModelSerializer):
         ] 
 
 class PostsRetriveSerializer(serializers.ModelSerializer):
-    image = ImageSerializer()
+    
 
     class Meta:
 
@@ -49,6 +49,7 @@ class PostsRetriveSerializer(serializers.ModelSerializer):
             "organ",
             "type_post",
         ]
+        depth = 2
     
 
 class PostsListSerializer(serializers.ModelSerializer):
@@ -69,6 +70,7 @@ class PostsListSerializer(serializers.ModelSerializer):
             "name",
             "post_date"
         ]
+        depth = 2
 
       
 
