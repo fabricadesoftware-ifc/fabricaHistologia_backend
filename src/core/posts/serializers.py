@@ -1,4 +1,5 @@
 from core.posts.models import Posts, Point
+from core.uploader.serializers import ImageSerializer
 from rest_framework import serializers
 
 class PointRetriveSerializer(serializers.ModelSerializer):
@@ -30,7 +31,10 @@ class PointWriteSerializer(serializers.ModelSerializer):
         ] 
 
 class PostsRetriveSerializer(serializers.ModelSerializer):
+    image = ImageSerializer()
+
     class Meta:
+
         model = Posts
         fields: list[str] = [
             "id",
@@ -48,9 +52,13 @@ class PostsRetriveSerializer(serializers.ModelSerializer):
     
 
 class PostsListSerializer(serializers.ModelSerializer):
+    image = ImageSerializer()
+
     class Meta:
+
         model = Posts
         fields: list[str] = [
+            "id",
             "species",
             "image",
             "autor_user",
@@ -61,7 +69,6 @@ class PostsListSerializer(serializers.ModelSerializer):
             "name",
             "post_date"
         ]
-        depth = 2
 
       
 

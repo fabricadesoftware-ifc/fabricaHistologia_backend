@@ -1,8 +1,8 @@
 from django.db import models
+
 from core.veterinary.models import Organ, Specie
 from core.user.models import  User
 from core.uploader.models import Image
-
 
 class Posts(models.Model):
     class TypePost(models.IntegerChoices):
@@ -37,13 +37,17 @@ class Posts(models.Model):
     
 
 class Point(models.Model):
+    class ColorChoices(models.TextChoices):
+        AMARELO = "yellow", 
+        AZUL = "blue", 
+        VERMELHO = "red",
     label_title = models.CharField(max_length=255)
-    description = models.CharField(max_length=255)
+    description = models.TextField()
     position = models.JSONField()
-    color = models.CharField(max_length=255)
+    color = models.CharField(choices=ColorChoices.choices, max_length=10)
     posts = models.ForeignKey(Posts, on_delete=models.PROTECT)
-    analyzed_structures = models.CharField(max_length=255)
-    analyzed_functions = models.CharField(max_length=255)
+    analyzed_structures = models.CharField(max_length=255, null=True, blank=True)
+    analyzed_functions = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self) -> str:
         return f"{self.posts.name} - {self.label_title}"

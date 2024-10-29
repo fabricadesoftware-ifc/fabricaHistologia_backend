@@ -16,8 +16,13 @@ class CustomUserManager(BaseUserManager):
         if not email:
             raise ValueError(_("The Email must be set"))
         email = self.normalize_email(email)
+        
+        passage_id = str(uuid.uuid4())
+        while self.model.objects.filter(passage_id=passage_id).exists():
+            passage_id = str(uuid.uuid4())
+
+        extra_fields["passage_id"] = passage_id 
         user = self.model(email=email, **extra_fields)
-        extra_fields.setdefault("passage_id", str(uuid.uuid4())) 
         user.set_password(password)
         user.save()
         return user

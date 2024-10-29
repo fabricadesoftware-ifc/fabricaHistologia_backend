@@ -9,7 +9,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from core.posts.models import Posts, Point
 from core.posts.serializers import PointRetriveSerializer, PointWriteSerializer
 from core.posts.serializers import PostsWriteSerializer, PostsListSerializer, PostsRetriveSerializer
-from core.posts.filters import PostFilter
+from core.posts.filters import PostFilter, PointFilter
 
 @extend_schema(tags=["Posts"])
 class PostsViewSet(ModelViewSet):
@@ -28,6 +28,8 @@ class PostsViewSet(ModelViewSet):
 @extend_schema(tags=["Point"])
 class PointViewSet(ModelViewSet):
     queryset = Point.objects.all()
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = PointFilter
 
     def get_serializer_class(self):
         if self.action in ["list", "retrieve"]:
