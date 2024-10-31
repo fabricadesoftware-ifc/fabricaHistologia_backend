@@ -32,6 +32,7 @@ dependencies = [
     "django-cloudinary-storage>=0.3.0",
     "django-filter>=24.3",
     "dj-database-url>=2.3.0",
+    "gunicorn>=23.0.0",
 ]
 requires-python = "==3.11.*"
 readme = "README.md"
