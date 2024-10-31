@@ -5,14 +5,15 @@ from core.posts.models import Posts
 from core.user.models import User, PersonalData
 from django.urls import reverse
 from uuid import uuid4
+from django_project.settings import API_URL
 
 
 @shared_task
 def post_validation(slide_post_id, EMAIL_RECEIVER_USER, user_id):
     print('Sending email...')
-    instance: object = Posts.objects.get(id=slide_post_id)
-    user: object = User.objects.get(id=user_id)
-    personal_data: object = PersonalData.objects.get(user=user)
+    instance: Posts = Posts.objects.get(id=slide_post_id)
+    user: User = User.objects.get(id=user_id)
+    personal_data: PersonalData = PersonalData.objects.get(user=user)
 
     token = str(uuid4())
     instance.verification_token = token
@@ -21,7 +22,7 @@ def post_validation(slide_post_id, EMAIL_RECEIVER_USER, user_id):
    
     verify_url = reverse('verify-post', kwargs={'verification_token': token})
 
-    verify_link = f'http://localhost:8000{verify_url}'
+    verify_link = f'{API_URL}/{verify_url}'
 
     email_user: str = instance.autor_user
     from_email: str = EMAIL_HOST_USER

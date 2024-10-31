@@ -1,5 +1,6 @@
 from pathlib import Path
 import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -9,18 +10,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-(a05as7xwtkh*%z3jz=fon$5z!3s*g19#p01f$f5b&1sgqe6m0'
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 MODE = "MIGRATE"
 
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = []
 
-
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -100,10 +97,9 @@ SPECTACULAR_SETTINGS = {
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    "default": dj_database_url.config(
+        default=os.getenv("DATABASE_URL", "sqlite:///db.sqlite3")
+    )
 }
 
 
@@ -141,27 +137,29 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = os.getenv("STATIC_URL", '/static/')
 
 # App Uploader/Cloudinary settings
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dzdrwmug3',
-    'API_KEY': '741644777853926',
-    'API_SECRET': 'UvCHKnDuW0NhXZfXgLtOptBmTtc',
-    'PREFIX': 'vet',
+    'CLOUD_NAME': os.getenv("CLOUDINARY_CLOUD_NAME"),
+    'API_KEY': os.getenv("CLOUDINARY_API_KEY"),
+    'API_SECRET': os.getenv("CLOUDINARY_API_SECRET"),
+    'PREFIX': os.getenv("CLOUDINARY_PREFIX"),
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 
 if MODE in ["PRODUCTION", "MIGRATE"]:
-    CLOUDINARY_URL = "cloudinary://741644777853926:UvCHKnDuW0NhXZfXgLtOptBmTtc@dzdrwmug3"
-    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+    CLOUDINARY_URL = os.getenv("CLOUDINARY_URL")
+    DEFAULT_FILE_STORAGE = os.getenv("DEFAULT_FILE_STORAGE")
     STATIC_ROOT = os.path.join(BASE_DIR, "static")
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-    MEDIA_URL = '/images/'
+    STATICFILES_STORAGE = os.getenv("STATICFILES_STORAGE")
+    MEDIA_URL = os.getenv("MEDIA_URL", '/images/')
 else:
-    MY_IP = "127.0.0.1"
+    MY_IP = os.getenv("MY_IP","127.0.0.1")
+    
+
     MEDIA_URL = f"http://{MY_IP}:19003/images/"
 
 MEDIA_ENDPOINT = "/images/"
@@ -178,22 +176,25 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = "user.User"
 
 
-PASSAGE_APP_ID: str = '2TXjjhFWhntb7WqVkG46xAmb'
-PASSAGE_API_KEY: str = 'WG7v8fQtFx.eQpT8x7cBDY3NITVXUGLgEDWSg4eNUGDKzlFIRBfg7P7fUROLPpkgANHLGhCYesq'
-PASSAGE_AUTH_STRATEGY: int = 2
+PASSAGE_APP_ID = os.getenv("PASSAGE_APP_ID")
+PASSAGE_API_KEY = os.getenv("PASSAGE_API_KEY")
+PASSAGE_AUTH_STRATEGY = os.getenv("PASSAGE_AUTH_STRATEGY")
 
 
-EMAIL_BACKEND: str = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST: str = 'smtp.gmail.com'
-EMAIL_PORT: int = 587
-EMAIL_USE_TLS: bool = True
-EMAIL_HOST_USER: str = 'fabricahistologia@gmail.com'
-EMAIL_HOST_PASSWORD: str = 'xrnq bkut ihta symq'
-EMAIL_RECEIVER_HISTOLOGY_USER: str = "joaovssouza59@gmail.com"
-EMAIL_RECEIVER_PATHOLOGY_USER: str = "marcusviniciusgraciano04@gmail.com"
+EMAIL_BACKEND = os.getenv("EMAIL_BACKEND")
+EMAIL_HOST = os.getenv("EMAIL_HOST")
+EMAIL_PORT = os.getenv("EMAIL_PORT")
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+EMAIL_RECEIVER_HISTOLOGY_USER = os.getenv("EMAIL_RECEIVER_HISTOLOGY_USER")
+EMAIL_RECEIVER_PATHOLOGY_USER = os.getenv("EMAIL_RECEIVER_PATHOLOGY_USER")
+
 
 CELERY_TIMEZONE: str = "America/Sao_Paulo"
 CELERY_TASK_TRACK_STARTED: bool = True
 CELERY_TASK_TIME_LIMIT: int = 30 * 60
-CELERY_BROKER_URL: str = 'amqp://jaotarzan:Batata_12@localhost:5672/fabricahistologia'
-CELERY_RESULT_BACKEND: str = 'rpc://'
+CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL")
+CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND")
+
+API_URL = os.getenv("API_URL")

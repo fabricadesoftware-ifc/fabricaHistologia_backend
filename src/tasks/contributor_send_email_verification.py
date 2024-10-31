@@ -3,15 +3,16 @@ from celery import shared_task
 
 from django_project.settings import EMAIL_HOST_USER, EMAIL_RECEIVER_HISTOLOGY_USER, EMAIL_RECEIVER_PATHOLOGY_USER
 from core.user.models import User, PersonalData
+from django_project.settings import API_URL
 
 @shared_task
 def contributor_send_email_verification(id_user, verify_url):
 
-    instance: object = User.objects.get(id=id_user)
-    personal_data: object = PersonalData.objects.get(user=instance)
+    instance: User = User.objects.get(id=id_user)
+    personal_data: PersonalData = PersonalData.objects.get(user=instance)
     user_email: str = instance.email
 
-    verify_link: str = f'http://localhost:8000{verify_url}'
+    verify_link: str = f"{API_URL}/{verify_url}"
     recipient_list: list[str] = [EMAIL_RECEIVER_HISTOLOGY_USER, EMAIL_RECEIVER_PATHOLOGY_USER]
     from_email: str = EMAIL_HOST_USER
 
