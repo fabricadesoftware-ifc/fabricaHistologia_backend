@@ -9,19 +9,14 @@ class CustomUserManager(BaseUserManager):
     for authentication instead of usernames.
     """
 
-    def create_user(self, email, passage_id, password=None, **extra_fields):
+    def create_user(self, passage_id, email, password=None, **extra_fields):
         """
         Create and save a user with the given email and password.
         """
         if not email:
             raise ValueError(_("The Email must be set"))
         email = self.normalize_email(email)
-        
-        
-        while self.model.objects.filter(passage_id=passage_id).exists():
-            passage_id = passage_id
-         
-        user = self.model(email=email, **extra_fields)
+        user = self.model(email=email,passage_id=passage_id, **extra_fields)
         user.set_password(password)
         user.save()
         return user
