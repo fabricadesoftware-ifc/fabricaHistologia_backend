@@ -13,6 +13,8 @@ class SupportingMaterialDetailSerializer(ModelSerializer):
             "field_name",
             "system"
         ]
+        depth = 2
+
 
 class SupportingMaterialWriteSerializer(ModelSerializer):
     class Meta:
@@ -37,3 +39,5 @@ class SupportingMaterialListSerializer(ModelSerializer):
             "image_supporting_material",
             "system"
         ]
+
+        depth = 2
