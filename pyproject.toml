@@ -16,11 +16,10 @@ dependencies = [
     "django-cors-headers>=4.4.0",
     "google-api-python-client>=2.135.0",
     "openapi-python-client>=0.21.1",
+    "python-dotenv>=1.0.1",
     "Pillow>=10.4.0",
     "python-magic>=0.4.27; sys_platform == \"linux\"",
     "python-magic-bin>=0.4.14; sys_platform == \"win32, darwin\"",
-    "django-extensions>=3.2.3",
-    "graphviz>=0.20.3",
     "celery>=5.4.0",
     "django-celery-results>=2.5.1",
     "flower>=2.0.1",
@@ -31,23 +30,28 @@ dependencies = [
     "django-filter>=24.3",
     "dj-database-url>=2.3.0",
     "gunicorn>=23.0.0",
-    "python-dotenv>=1.0.1",
+    "psycopg2>=2.9.10",
 ]
 requires-python = "==3.11.*"
 readme = "README.md"
 license = {text = "MIT"}
 
+[tool.pdm.dev-dependencies]
+dev = [
+    "colorama>=0.4.6",
+    "django-extensions>=3.2.3",
+    "graphviz>=0.20.3",
+]
 
 [tool.pdm]
 distribution = false
 
 [tool.pdm.scripts]
-dev = "python src/manage.py runserver localhost:8000"
+dev = "python src/manage.py runserver localhost:8001"
 runserver = "python src/manage.py runserver"
 createsuperuser = "python src/manage.py createsuperuser"
 migrate = "python src/manage.py migrate"
 makemigrations = "python src/manage.py makemigrations"
 celery = "celery -A django_project worker -l info"
 populate = "python src/manage.py populate"
-
 
