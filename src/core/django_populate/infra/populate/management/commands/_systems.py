@@ -1,4 +1,5 @@
 from core.veterinary.models import System
+from core.uploader.models import Image
 
 from core.django_populate.infra.datas.system import systems
 
@@ -9,10 +10,12 @@ def populate_systems():
 
     for systems_data in systems:
         try:
+            image = Image.objects.get(description=systems_data["image"])
             # cria os sistemas
             system = System.objects.create(
                 name=systems_data["name"],
                 description=systems_data["description"],
+                image=image,
             )
 
             system.save()

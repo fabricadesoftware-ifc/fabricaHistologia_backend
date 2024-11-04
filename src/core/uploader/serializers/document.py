@@ -13,7 +13,9 @@ class DocumentUploadSerializer(serializers.ModelSerializer):
 
     def validate_file(self, value):
         valid_content_types = [CONTENT_TYPE_PDF]
+        print(value)
         if get_content_type(value) not in valid_content_types:
+            print(value)
             raise serializers.ValidationError("Invalid or corrupted document.")
         return value
 

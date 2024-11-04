@@ -15,7 +15,7 @@ class SupportingMaterial(models.Model):
         default=None,
     )
     document_supporting_material = models.ForeignKey(
-        Document,
+        Image,
         related_name="+",
         on_delete=models.CASCADE,
         null=True,

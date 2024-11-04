@@ -4,7 +4,6 @@ import dj_database_url
 from dotenv import load_dotenv
 
 load_dotenv()
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -177,7 +176,6 @@ CORS_ALLOW_ALL_ORIGINS = True
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "user.User"
-
 
 PASSAGE_APP_ID = os.getenv("PASSAGE_APP_ID")
 PASSAGE_API_KEY = os.getenv("PASSAGE_API_KEY")
