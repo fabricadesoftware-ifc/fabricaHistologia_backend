@@ -16,8 +16,6 @@ dependencies = [
     "django-cors-headers>=4.4.0",
     "google-api-python-client>=2.135.0",
     "openapi-python-client>=0.21.1",
-    "dotenv>=0.0.5",
-    "python-dotenv>=1.0.1",
     "Pillow>=10.4.0",
     "python-magic>=0.4.27; sys_platform == \"linux\"",
     "python-magic-bin>=0.4.14; sys_platform == \"win32, darwin\"",
@@ -33,6 +31,7 @@ dependencies = [
     "django-filter>=24.3",
     "dj-database-url>=2.3.0",
     "gunicorn>=23.0.0",
+    "python-dotenv>=1.0.1",
 ]
 requires-python = "==3.11.*"
 readme = "README.md"

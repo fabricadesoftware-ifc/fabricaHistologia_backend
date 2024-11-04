@@ -1,7 +1,9 @@
 from pathlib import Path
 import os
 import dj_database_url
+from dotenv import load_dotenv
 
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -16,7 +18,7 @@ MODE = "MIGRATE"
 
 DEBUG = os.getenv("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 INSTALLED_APPS = [
@@ -141,11 +143,12 @@ STATIC_URL = os.getenv("STATIC_URL", '/static/')
 
 # App Uploader/Cloudinary settings
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.getenv("CLOUDINARY_CLOUD_NAME"),
-    'API_KEY': os.getenv("CLOUDINARY_API_KEY"),
-    'API_SECRET': os.getenv("CLOUDINARY_API_SECRET"),
+    'CLOUD_NAME': 'dzdrwmug3',
+    'API_KEY': '741644777853926',
+    'API_SECRET': 'UvCHKnDuW0NhXZfXgLtOptBmTtc',
     'PREFIX': os.getenv("CLOUDINARY_PREFIX"),
 }
+
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
@@ -174,7 +177,6 @@ CORS_ALLOW_ALL_ORIGINS = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = "user.User"
-
 
 PASSAGE_APP_ID = os.getenv("PASSAGE_APP_ID")
 PASSAGE_API_KEY = os.getenv("PASSAGE_API_KEY")

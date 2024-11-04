@@ -1,36 +1,34 @@
-import requests
 from core.uploader.models import Image
-from core.django_populate.infra.datas.image import images
+from core.django_populate.domain import images
 from django.core.files.base import ContentFile
+import os
 import mimetypes
-
-def download_images(imageUrl):
-    
-    response = requests.get(imageUrl)
-    if response.status_code == 200:
-        return response.content
-    return None
 
 def populate_images():
     
-    for image_data in images:
+    path = images.__path__[0]
+    
+    for i in range(0, len(os.listdir(path))):
+        file = os.listdir(path)[i]
+        print(file)
+        filename = os.path.join(path, file)
 
         try:
-            image_downloaded = download_images(image_data['url'])
 
-            if image_downloaded:
-                filename = image_data['file'].split('/')[-1] or 'downloaded_image.jpg'
-                content_type = mimetypes.guess_type(filename)[0]
-                print(content_type)
+            if filename:
+                with open(filename, 'rb') as f:
+                    content = f.read()
 
-                image_file = ContentFile(image_downloaded, name=filename)
-                image_file.content_type = content_type
-    
-                image = Image.objects.create(
-                    description = image_data['description'],
-                    file = image_file
-                )
+                    content_type = mimetypes.guess_type(filename)[0]
 
-                image.save()
+                    content_file = ContentFile(content, name=filename)
+                    content_file.content_type = content_type
+
+                    document = Image.objects.create(
+                        description = file.replace('.png', ''),
+                        file = content_file,
+                    )
+
+                    document.save()
         except Exception as e:
             print(f'erro seu bosta', e)
