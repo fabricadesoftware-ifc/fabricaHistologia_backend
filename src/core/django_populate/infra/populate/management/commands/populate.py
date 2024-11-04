@@ -4,6 +4,7 @@ from core.django_populate.infra.populate.management.commands._systems import pop
 from core.django_populate.infra.populate.management.commands._quiz import populate_quizzes
 from core.django_populate.infra.populate.management.commands._answers import populate_answers
 from core.django_populate.infra.populate.management.commands._images import populate_images
+from core.django_populate.infra.populate.management.commands._supporting_material import populate_documents, populate_supporting_materials
 
 class Command(BaseCommand):
     """
@@ -41,6 +42,11 @@ class Command(BaseCommand):
             help="Insert images in database"
         )
         parser.add_argument(
+            "--supporting_material",
+            action="store_true",
+            help="Insert images in database"
+        )
+        parser.add_argument(
             "--all",
             action="store_true",
             help="insert all in database"
@@ -56,6 +62,8 @@ class Command(BaseCommand):
                 self.__handle_answers()
             if options.get("images"):
                 self.__handle_images()
+            if options.get("supporting_material"):
+                self.__handle_supporting_materials()
             if options.get("all"):
                 self.__handle_all()
 
@@ -92,6 +100,12 @@ class Command(BaseCommand):
         self.stdout.write("Populating images data in the database...", ending=" ")
         populate_images()
         self.stdout.write(self.style.SUCCESS("OK"))
+
+    def __handle_supporting_materials(self) -> None:
+        self.stdout.write("Populating images data in the database...", ending=" ")
+        populate_documents()
+        populate_supporting_materials()
+        self.stdout.write(self.style.SUCCESS("OK"))
         
     def __handle_all(self) -> None:
         self.stdout.write("Populating data in the database...", ending=" ")
@@ -99,4 +113,6 @@ class Command(BaseCommand):
         populate_systems()
         populate_quizzes()
         populate_answers()
+        populate_documents()
+        populate_supporting_materials()
         self.stdout.write(self.style.SUCCESS("OK"))

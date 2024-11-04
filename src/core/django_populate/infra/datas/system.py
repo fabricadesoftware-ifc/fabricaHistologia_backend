@@ -37,9 +37,9 @@ systems = [
   },
   {
     "id": 7,
-    "name": "Histologia Veterinária",
-    "description": "Histologia veterinária é o estudo dos tecidos animais em nível microscópico, incluindo sua estrutura, função e organização. Envolve a análise de diferentes tipos de tecidos, como epitelial, conjuntivo, muscular e nervoso, além da compreensão das características histológicas de vários órgãos e sistemas em diferentes espécies animais. Esse campo é essencial para o diagnóstico de doenças e para a compreensão da fisiologia animal.",
-    "image": 'Microscópio',
+    "name": "Organização dos Órgãos",
+    "description": "O estudo da organização dos órgãos envolve a compreensão de como os órgãos estão dispostos e conectados no corpo, bem como sua função e interdependência nos diversos sistemas corporais. Este campo ajuda a entender a anatomia funcional e as interações entre órgãos, facilitando diagnósticos e tratamentos médicos.",
+    "image": "Digestao",
   },
   {
     "id": 8,
