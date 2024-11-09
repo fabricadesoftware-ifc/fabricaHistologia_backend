@@ -48,6 +48,7 @@ class PostsRetriveSerializer(serializers.ModelSerializer):
             "autor_user",
             "organ",
             "type_post",
+            "name"
         ]
         depth = 2
     
