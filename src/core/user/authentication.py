@@ -30,16 +30,34 @@ class TokenAuthenticationScheme(OpenApiAuthenticationExtension):
 
 
 class TokenAuthentication(authentication.BaseAuthentication):
-    def authenticate(self, request) -> tuple[User, None]:
+    def authenticate(self, request) -> tuple[User, None] | None:
         if not request.headers.get("Authorization"):
-            return None
+            return None  # Sem token, não há autenticação
 
-        token = request.headers.get("Authorization").split()[1]
-        psg_user_id: str = self._get_user_id(token)
-        user: User = self._get_or_create_user(psg_user_id)
+        try:
+            # Obtendo o token do cabeçalho
+            auth_header = request.headers.get("Authorization").split()
+            print(f"header: {auth_header}")
+            if len(auth_header) != 2 or auth_header[0].lower() != "bearer":
+                raise AuthenticationFailed("Cabeçalho de autorização inválido")
 
-        return (user, None)
+            token = auth_header[1]
+            print("Token recebido:", token)
 
+            # Validando o JWT
+            psg_user_id: str = psg.validateJwt(token)
+            print("Usuário autenticado:", psg_user_id)
+            
+            try:
+                user = self._get_or_create_user(psg_user_id)
+            except User.DoesNotExist:
+                raise AuthenticationFailed("Usuário não encontrado")
+            
+            print(f"chegou aqui {user}")
+            return (user, None)
+        except (IndexError, PassageError) as e:
+            raise AuthenticationFailed(f"Erro na autenticação: {str(e)}")
+        
     def _get_or_create_user(self, psg_user_id) -> User:
         print("passge_Id dessa porar:", psg_user_id)
         try:
@@ -51,8 +69,8 @@ class TokenAuthentication(authentication.BaseAuthentication):
                 passage_id=psg_user.id,
                 email=psg_user.email,
             )
-
         return user
+
 
     def _get_user_id(self, token) -> str:
         try:
