@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificação de Novo Usuário</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #333;
+        }
+        p {
+            color: #555;
+            line-height: 1.5;
+        }
+        .verify-button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 15px;
+            background-color: #28a745;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .verify-button:hover {
+            background-color: #218838;
+        }
+        @media screen and (max-width: 600px) {
+            .container {
+                width: 90%;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Verificação de Novo Usuário</h2>
+        <p>Um novo usuário requer verificação.</p>
+        <p><strong>Nome:</strong> personal_data.name</p>
+        <p><strong>Email:</strong> user_email</p>
+        <p><strong>Registro:</strong> personal_data.registration</p>
+        <p><strong>Data de nascimento:</strong> personal_data.birth_date</p>
+        <p><strong>Telefone:</strong> personal_data.phone</p>
+        <p><strong>Nível de escolaridade:</strong> personal_data.education_level</p>
+        <p><strong>Universidade:</strong> personal_data.university</p>
+        <p>Por favor, clique no link abaixo para verificar o usuário:</p>
+        <a href="verify_link" class="verify-button">Verificar Usuário</a>
+    </div>
+</body>
+</html>
