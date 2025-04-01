@@ -33,7 +33,7 @@ class PersonalData(models.Model):
     registration = models.CharField(max_length=20)
     birth_date = models.DateField()
     phone = models.CharField(max_length=20)
-    class education_level(models.TextChoices):
+    class education_level_choices(models.TextChoices):
         MEDIO = "Médio", _("Médio")
         SUPERIOR = "Superior", _("Superior")
         POS_GRADUACAO = "Pós-Graduação", _("Pós-Graduação")
@@ -42,8 +42,8 @@ class PersonalData(models.Model):
         POS_DOUTORADO = "Pós-Doutorado", _("Pós-Doutorado")
     education_level = models.CharField(
         max_length=20,
-        choices=education_level.choices,
-        default=education_level.MEDIO,
+        choices=education_level_choices.choices,
+        default=education_level_choices.MEDIO,
     )
     university = models.CharField(max_length=255, blank=True, null=True)
     
