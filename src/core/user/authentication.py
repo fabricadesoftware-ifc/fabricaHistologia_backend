@@ -42,18 +42,24 @@ class TokenAuthentication(authentication.BaseAuthentication):
                 raise AuthenticationFailed("Cabeçalho de autorização inválido")
 
             token = auth_header[1]
-            print("Token recebido:", token)
-
-            # Validando o JWT
-            psg_user_id: str = psg.validateJwt(token)
-            print("Usuário autenticado:", psg_user_id)
+            print("Token recebido")
             
             try:
+                print("aqui")
+                psg_user_id: str = psg.validateJwt(token)
+                print("Usuário autenticado:", psg_user_id)
+            except (PassageError) as e:
+                raise AuthenticationFailed("não ta validando", e)
+            
+            try:
+                print("aqui 2")
                 user = self._get_or_create_user(psg_user_id)
             except User.DoesNotExist:
                 raise AuthenticationFailed("Usuário não encontrado")
+
             
             print(f"chegou aqui {user}")
+            
             return (user, None)
         except (IndexError, PassageError) as e:
             raise AuthenticationFailed(f"Erro na autenticação: {str(e)}")
