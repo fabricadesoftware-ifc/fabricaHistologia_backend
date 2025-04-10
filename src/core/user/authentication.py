@@ -45,27 +45,21 @@ class TokenAuthentication(authentication.BaseAuthentication):
             print("Token recebido")
             
             try:
-                print("aqui")
                 psg_user_id: str = psg.validateJwt(token)
                 print("Usuário autenticado:", psg_user_id)
             except (PassageError) as e:
-                raise AuthenticationFailed("não ta validando", e)
+                raise AuthenticationFailed("Erro na Valição do token", e)
             
             try:
-                print("aqui 2")
                 user = self._get_or_create_user(psg_user_id)
             except User.DoesNotExist:
                 raise AuthenticationFailed("Usuário não encontrado")
-
-            
-            print(f"chegou aqui {user}")
             
             return (user, None)
         except (IndexError, PassageError) as e:
             raise AuthenticationFailed(f"Erro na autenticação: {str(e)}")
         
     def _get_or_create_user(self, psg_user_id) -> User:
-        print("passge_Id dessa porar:", psg_user_id)
         try:
             user: User = User.objects.get(passage_id=psg_user_id)
         except ObjectDoesNotExist:

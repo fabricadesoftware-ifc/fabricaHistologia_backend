@@ -15,7 +15,6 @@ def contributor_send_email_verification(id_user, verify_url):
     personal_data: PersonalData = PersonalData.objects.get(user=instance)
     user_email: str = instance.email
     birth_date: str = personal_data.birth_date.strftime("%Y-%m-%d")
-
     verify_link: str = f"{API_URL}/{verify_url}"
     recipient_list: list[str] = [EMAIL_RECEIVER_HISTOLOGY_USER, EMAIL_RECEIVER_PATHOLOGY_USER]
     from_email: str = EMAIL_HOST_USER
