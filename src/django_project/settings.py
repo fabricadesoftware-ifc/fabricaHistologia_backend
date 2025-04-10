@@ -21,7 +21,7 @@ DEBUG = os.getenv("DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = ["*"]
 
-CSRF_TRUSTED_ORIGINS=["https://fabrica-histologia-backend.fexcompany.me", "http://localhost:8001", "http://127.0.1:8001"]
+CSRF_TRUSTED_ORIGINS = ["https://fabrica-histologia-backend.fexcompany.me", "http://localhost:8001", "http://127.0.1:8001"]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
