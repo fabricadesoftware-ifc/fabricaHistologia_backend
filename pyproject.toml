@@ -30,7 +30,7 @@ dependencies = [
     "django-filter>=24.3",
     "dj-database-url>=2.3.0",
     "gunicorn>=23.0.0",
-    "psycopg2>=2.9.10",
+    "psycopg2-binary>=2.9.10",
 ]
 requires-python = "==3.11.*"
 readme = "README.md"
@@ -47,11 +47,11 @@ dev = [
 distribution = false
 
 [tool.pdm.scripts]
-dev = "python src/manage.py runserver localhost:8001"
+dev = "python src/manage.py runserver 0.0.0.0:8001"
 runserver = "python src/manage.py runserver"
 createsuperuser = "python src/manage.py createsuperuser"
 migrate = "python src/manage.py migrate"
 makemigrations = "python src/manage.py makemigrations"
-celery = "celery -A django_project worker -l info"
 populate = "python src/manage.py populate"
+celery = "python -m celery --workdir src -A django_project worker --loglevel=info"
 
