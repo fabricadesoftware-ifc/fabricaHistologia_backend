@@ -17,6 +17,6 @@ jobs:
       - name: Push to dokku
         uses: dokku/github-action@master
         with:
-          git_remote_url: 'ssh://dokku@app1.fabricadesoftware.ifc.edu.br:1022/painel'
+          git_remote_url: 'ssh://dokku@app1.fabricadesoftware.ifc.edu.br:1022/histologia-api'
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
           branch: main
