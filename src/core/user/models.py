@@ -26,6 +26,17 @@ class User(AbstractUser):
         verbose_name_plural = "Usuários"
         ordering = ["-date_joined"]
 
+class Address(models.Model):
+    state = models.CharField(max_length=100)
+    city = models.CharField(max_length=100)
+
+    class Meta:
+        verbose_name = "Endereço"
+        verbose_name_plural = "Endereços"
+
+    def __str__(self):
+        return f"{self.state}, {self.city}"
+
 
 class PersonalData(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -33,6 +44,7 @@ class PersonalData(models.Model):
     registration = models.CharField(max_length=20)
     birth_date = models.DateField()
     phone = models.CharField(max_length=20)
+    address = models.ForeignKey(Address, on_delete=models.PROTECT, relate_name='personaldata')
     class education_level_choices(models.TextChoices):
         MEDIO = "Médio", _("Médio")
         SUPERIOR = "Superior", _("Superior")
