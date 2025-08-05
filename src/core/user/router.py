@@ -7,3 +7,4 @@ app_name = "core.user"
 router = DefaultRouter()
 router.register("users", views.UserViewSet)
 router.register("personal", views.PersonalDataViewSet, basename="personal")
+router.register("address", views.AddressViewSet, basename="address")
