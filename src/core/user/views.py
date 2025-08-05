@@ -8,8 +8,8 @@ from rest_framework.decorators import api_view
 
 from django_filters.rest_framework import DjangoFilterBackend
 
-from core.user.models import User, PersonalData
-from core.user.serializers import UserSerializer, PersonalDataWriteSerializer, PersonalDataDetailSerializer, PersonalDataListSerializer
+from core.user.models import User, PersonalData, Address
+from core.user.serializers import UserSerializer, PersonalDataWriteSerializer, PersonalDataDetailSerializer, PersonalDataListSerializer, AddressSerializer
 from core.user.filters import PersonalDataFilter
 
 class UserViewSet(ModelViewSet):
@@ -23,6 +23,9 @@ class UserViewSet(ModelViewSet):
         serializer = UserSerializer(user)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+class AddressViewSet(ModelViewSet):
+    queryset = Address.objects.all()
+    serializer_class = AddressSerializer
 
 @api_view(['GET'])
 def verify_user(request, verification_token):
@@ -52,3 +55,4 @@ class PersonalDataViewSet(ModelViewSet):
         elif self.action in ["retrieve"]:
             return PersonalDataDetailSerializer
         return PersonalDataWriteSerializer
+    
