@@ -3,7 +3,27 @@ from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
 
 from .forms import CustomUserChangeForm, CustomUserCreationForm
-from .models import User, PersonalData
+from .models import User, PersonalData, Address
+
+@admin.register(Address)
+class AdrressAdmin(admin.ModelAdmin):
+    list_display = [
+        "city",
+        "state",
+    ]
+    search_fields = [
+        "city",
+        "state",
+    ]
+    list_filter = [
+        "city",
+        "state",
+    ]
+    fields = [
+        "city",
+        "state",
+    ]
+    readonly_fields = ["id"]
 
 
 @admin.register(PersonalData)
@@ -16,6 +36,7 @@ class PersonalDataAdmin(admin.ModelAdmin):
         "education_level",
         "university",
         "user",
+        "address",
     ]
     search_fields = [
         "name",
@@ -25,6 +46,7 @@ class PersonalDataAdmin(admin.ModelAdmin):
         "education_level",
         "university",
         "user",
+        "address",
     ]
     list_filter = [
         "name",
@@ -34,6 +56,7 @@ class PersonalDataAdmin(admin.ModelAdmin):
         "education_level",
         "university",
         "user",
+        "address",
     ]
     fields = [
         "name",
@@ -43,6 +66,7 @@ class PersonalDataAdmin(admin.ModelAdmin):
         "education_level",
         "university",
         "user",
+        "address",
     ]
     readonly_fields = ["id"]
     ordering = ["name"]
