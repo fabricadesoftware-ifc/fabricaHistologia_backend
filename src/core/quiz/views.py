@@ -3,10 +3,10 @@ from drf_spectacular.utils import extend_schema
 
 from django_filters.rest_framework import DjangoFilterBackend
 
-from core.quiz.models import Answer, Quiz
+from core.quiz.models import Answer, Quiz, Score
 from rest_framework.viewsets import ModelViewSet
-from core.quiz.serializers import AnswerDetailSerializer, AnswerWriteSerializer, QuizDetailSerializer, QuizWriteSerializer
-from core.quiz.filters import AnswerFilter, QuizFilter
+from core.quiz.serializers import AnswerDetailSerializer, AnswerWriteSerializer, QuizDetailSerializer, QuizWriteSerializer, ScoreDetailSerializer
+from core.quiz.filters import AnswerFilter, QuizFilter, ScoreFilter
 
 
 
@@ -36,4 +36,12 @@ class AnswerViewSet(ModelViewSet):
         elif self.action in ["retrieve"]:
             return AnswerDetailSerializer
         return AnswerWriteSerializer
+    
+@extend_schema(tags=["Score"])
+class ScoreViewSet(ModelViewSet):
+    queryset = Score.objects.all().order_by("answer_time")
+    serializer_class = ScoreDetailSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = ScoreFilter
+    
     
