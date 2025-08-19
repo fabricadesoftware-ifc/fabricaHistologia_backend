@@ -12,7 +12,7 @@ class PostFilter(django_filters.FilterSet):
 
 class PointFilter(django_filters.FilterSet):
     posts_id = django_filters.NumberFilter(field_name="posts__id", lookup_expr='exact')
-
+    id = django_filters.NumberFilter(field_name="id", lookup_expr='exact')
     class Meta:
         model =  Point
-        fields = ['posts_id',]
+        fields = ['posts_id', 'id']

@@ -95,6 +95,7 @@ class PostsWriteSerializer(serializers.ModelSerializer):
             "image",
             "autor_user",
             "organ",
-            "type_post"
+            "type_post",
+            "name"
         ]
         
