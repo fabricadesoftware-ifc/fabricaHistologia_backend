@@ -13,7 +13,7 @@ class DocumentUploadViewSet(CreateViewSet):
     serializer_class = DocumentUploadSerializer
     parser_classes = [parsers.FormParser, parsers.MultiPartParser]
 
-
+    
 class ImageUploadViewSet(CreateViewSet):
     queryset = Image.objects.all() # pylint: disable=no-member
     serializer_class = ImageUploadSerializer
