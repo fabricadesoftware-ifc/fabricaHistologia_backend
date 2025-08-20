@@ -45,6 +45,7 @@ class SupportingMaterialListSerializer(serializers.ModelSerializer):
     class Meta:
         model = SupportingMaterial
         fields: list[str] = [
+            "id",
             "name",
             "description",
             "field_name",

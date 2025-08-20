@@ -21,7 +21,7 @@ class ImageUploadSerializer(serializers.ModelSerializer):
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Image
-        fields = ["url", "description", "uploaded_on"]
+        fields = ["url", "description", "uploaded_on", "attachment_key"]
         read_only_fields = ["url", "attachment_key", "uploaded_on"]
 
     def create(self, validated_data):
