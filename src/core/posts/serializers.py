@@ -1,4 +1,5 @@
 from core.posts.models import Posts, Point
+from core.uploader.models import Image
 from core.uploader.serializers import ImageSerializer
 from rest_framework import serializers
 
@@ -76,6 +77,12 @@ class PostsListSerializer(serializers.ModelSerializer):
       
 
 class PostsWriteSerializer(serializers.ModelSerializer):
+    image = serializers.SlugRelatedField(
+        slug_field="attachment_key",
+        queryset=Image.objects.all(),
+        required=False,
+        allow_null=True
+    )
     class Meta:
         model = Posts
         fields: list[str] = [
@@ -88,6 +95,7 @@ class PostsWriteSerializer(serializers.ModelSerializer):
             "image",
             "autor_user",
             "organ",
-            "type_post"
+            "type_post",
+            "name"
         ]
         

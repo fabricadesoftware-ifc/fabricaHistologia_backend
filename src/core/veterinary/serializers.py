@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from core.veterinary.models import System, Specie, Organ
+from core.uploader.models import Image
 from core.uploader.serializers import ImageSerializer
 
 class SystemDetailSerializer(serializers.ModelSerializer):
@@ -16,9 +17,16 @@ class SystemDetailSerializer(serializers.ModelSerializer):
           
 
 class SystemWriteSerializer(serializers.ModelSerializer):
+    image = serializers.SlugRelatedField(
+        slug_field="attachment_key",
+        queryset=Image.objects.all(),
+        required=False,
+        allow_null=True
+    )
     class Meta:
         model = System
         fields: list[str] = [
+            "id",
             "name",
             "description",
             "image",
@@ -46,6 +54,12 @@ class SpecieWriteSerializer(serializers.ModelSerializer):
 
 
 class OrganWriteSerializer(serializers.ModelSerializer):
+    image = serializers.SlugRelatedField(
+        slug_field="attachment_key",
+        queryset=Image.objects.all(),
+        required=False,
+        allow_null=True
+    )
     class Meta:
         model = Organ 
         fields: list[str] = [
@@ -67,3 +81,4 @@ class OrganDetailSerializer(serializers.ModelSerializer):
             "image",
             "system",
         ]
+        depth = 2

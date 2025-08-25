@@ -1,7 +1,8 @@
 from core.supporting_materials.models import SupportingMaterial
-from rest_framework.serializers import ModelSerializer
+from core.uploader.models import Image, Document
+from rest_framework import serializers
 
-class SupportingMaterialDetailSerializer(ModelSerializer):
+class SupportingMaterialDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = SupportingMaterial
         fields: list[str] = [
@@ -16,7 +17,19 @@ class SupportingMaterialDetailSerializer(ModelSerializer):
         depth = 2
 
 
-class SupportingMaterialWriteSerializer(ModelSerializer):
+class SupportingMaterialWriteSerializer(serializers.ModelSerializer):
+    image_supporting_material = serializers.SlugRelatedField(
+        slug_field="attachment_key",
+        queryset=Image.objects.all(),
+        required=False,
+        allow_null=True
+    )
+    document_supporting_material = serializers.SlugRelatedField(
+        slug_field="attachment_key",
+        queryset=Document.objects.all(),
+        required=False,
+        allow_null=True
+    )
     class Meta:
         model = SupportingMaterial
         fields: list[str] = [
@@ -28,10 +41,11 @@ class SupportingMaterialWriteSerializer(ModelSerializer):
             "system"
         ]
 
-class SupportingMaterialListSerializer(ModelSerializer):
+class SupportingMaterialListSerializer(serializers.ModelSerializer):
     class Meta:
         model = SupportingMaterial
         fields: list[str] = [
+            "id",
             "name",
             "description",
             "field_name",

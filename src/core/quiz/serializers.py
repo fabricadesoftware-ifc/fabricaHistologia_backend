@@ -1,4 +1,4 @@
-from core.quiz.models import Quiz, Answer
+from core.quiz.models import Quiz, Answer, Score
 from rest_framework.serializers import ModelSerializer
 
 class QuizDetailSerializer(ModelSerializer):
@@ -11,6 +11,7 @@ class QuizDetailSerializer(ModelSerializer):
             "level",
             "system"
         ]
+        depth = 2
 
 class QuizWriteSerializer(ModelSerializer):
     class Meta:
@@ -32,13 +33,28 @@ class AnswerDetailSerializer(ModelSerializer):
             "correct",
             "comment_answer"
         ]
+        depth = 2
 
 class AnswerWriteSerializer(ModelSerializer):
     class Meta:
         model = Answer
         fields: list[str] = [
+            "id",
             "question",
             "option",
             "correct",
             "comment_answer"
+        ]
+    
+        
+class ScoreDetailSerializer(ModelSerializer):
+    class Meta:
+        model = Score
+        fields: list[str] = [
+            "id",
+            "user",
+            "answer_time",
+            "type",
+            "level",
+            "system"
         ]

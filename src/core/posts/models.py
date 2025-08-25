@@ -45,7 +45,7 @@ class Point(models.Model):
     description = models.TextField()
     position = models.JSONField()
     color = models.CharField(choices=ColorChoices.choices, max_length=10)
-    posts = models.ForeignKey(Posts, on_delete=models.PROTECT)
+    posts = models.ForeignKey(Posts, on_delete=models.CASCADE)
     analyzed_structures = models.CharField(max_length=255, null=True, blank=True)
     analyzed_functions = models.CharField(max_length=255, null=True, blank=True)
 

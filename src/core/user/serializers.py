@@ -1,12 +1,29 @@
 from rest_framework.serializers import ModelSerializer, SlugRelatedField
 
-from .models import User, PersonalData
+from .models import User, PersonalData, Address
 
 
 class UserSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = "__all__"
+
+class AddressDetailSerializer(ModelSerializer):
+    class Meta:
+        model = Address
+        fields: list[str] = [
+            "id",
+            "city", 
+            "state",
+        ]
+
+class AddressWriteSerializer(ModelSerializer):
+    class Meta:
+        model = Address
+        fields: list[str] = [
+            "city", 
+            "state",
+        ]
 
 class PersonalDataWriteSerializer(ModelSerializer):
     user = SlugRelatedField(slug_field="email", queryset=User.objects.all())
@@ -19,7 +36,8 @@ class PersonalDataWriteSerializer(ModelSerializer):
             "phone",
             "education_level",
             "university",
-            "user"
+            "user",
+            "address",
         ]
 
 class PersonalDataDetailSerializer(ModelSerializer):
@@ -34,8 +52,10 @@ class PersonalDataDetailSerializer(ModelSerializer):
             "phone",
             "education_level",
             "university",
-            "user"
+            "user",
+            "address",
         ]
+        depth = 1
 
 class PersonalDataListSerializer(ModelSerializer):
     user = SlugRelatedField(slug_field="email", queryset=User.objects.all())
@@ -44,10 +64,11 @@ class PersonalDataListSerializer(ModelSerializer):
         fields: list[str] = [
             "id",
             "name",
+            "user",
             "registration",
             "birth_date",
             "phone",
             "education_level",
             "university",
-            "user"
+            "address",
         ]
