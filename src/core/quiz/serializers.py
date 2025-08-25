@@ -11,6 +11,7 @@ class QuizDetailSerializer(ModelSerializer):
             "level",
             "system"
         ]
+        depth = 2
 
 class QuizWriteSerializer(ModelSerializer):
     class Meta:
@@ -32,16 +33,19 @@ class AnswerDetailSerializer(ModelSerializer):
             "correct",
             "comment_answer"
         ]
+        depth = 2
 
 class AnswerWriteSerializer(ModelSerializer):
     class Meta:
         model = Answer
         fields: list[str] = [
+            "id",
             "question",
             "option",
             "correct",
             "comment_answer"
         ]
+    
         
 class ScoreDetailSerializer(ModelSerializer):
     class Meta:

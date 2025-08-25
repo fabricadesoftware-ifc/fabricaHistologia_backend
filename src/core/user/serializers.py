@@ -8,7 +8,16 @@ class UserSerializer(ModelSerializer):
         model = User
         fields = "__all__"
 
-class AddressSerializer(ModelSerializer):
+class AddressDetailSerializer(ModelSerializer):
+    class Meta:
+        model = Address
+        fields: list[str] = [
+            "id",
+            "city", 
+            "state",
+        ]
+
+class AddressWriteSerializer(ModelSerializer):
     class Meta:
         model = Address
         fields: list[str] = [

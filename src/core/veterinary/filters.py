@@ -1,5 +1,5 @@
 import django_filters
-from core.veterinary.models import Organ
+from core.veterinary.models import Organ, Specie
 
 class OrganFilter(django_filters.FilterSet):
     system_id = django_filters.NumberFilter(field_name='system__id', lookup_expr='exact')
@@ -7,3 +7,5 @@ class OrganFilter(django_filters.FilterSet):
     class Meta:
         model = Organ
         fields = ['system_id']
+
+

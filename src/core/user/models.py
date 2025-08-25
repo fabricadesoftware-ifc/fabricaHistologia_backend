@@ -44,7 +44,7 @@ class PersonalData(models.Model):
     registration = models.CharField(max_length=20)
     birth_date = models.DateField()
     phone = models.CharField(max_length=20)
-    address = models.ForeignKey(Address, on_delete=models.PROTECT, related_name='personaldata')
+    address = models.ForeignKey(Address, on_delete=models.PROTECT, related_name='personaldata', null=True, blank=True)
     class education_level_choices(models.TextChoices):
         MEDIO = "Médio", _("Médio")
         SUPERIOR = "Superior", _("Superior")
