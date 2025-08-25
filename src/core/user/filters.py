@@ -1,5 +1,5 @@
 import django_filters
-from core.user.models import PersonalData
+from core.user.models import PersonalData, Address
 
 class PersonalDataFilter(django_filters.FilterSet):
     user_id = django_filters.NumberFilter(field_name="user__id", lookup_expr='exact')

@@ -26,6 +26,7 @@ class SystemWriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = System
         fields: list[str] = [
+            "id",
             "name",
             "description",
             "image",
@@ -80,3 +81,4 @@ class OrganDetailSerializer(serializers.ModelSerializer):
             "image",
             "system",
         ]
+        depth = 2
