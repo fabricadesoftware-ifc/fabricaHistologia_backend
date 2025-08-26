@@ -7,7 +7,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('user', '0002_alter_personaldata_address'),
+        ("user", "0001_initial"),
     ]
 
     operations = [
