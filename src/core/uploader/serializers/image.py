@@ -14,7 +14,7 @@ class ImageUploadSerializer(serializers.ModelSerializer):
     def validate_file(self, value):
         valid_content_types = [CONTENT_TYPE_JPG, CONTENT_TYPE_PNG]
         if value.content_type not in valid_content_types:
-            raise serializers.ValidationError("Invalid or corrupted image.")
+            raise serializers.ValidationError("Imagem inválida ou corrompida")
         return value
 
 

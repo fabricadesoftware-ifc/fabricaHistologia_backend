@@ -16,7 +16,7 @@ class DocumentUploadSerializer(serializers.ModelSerializer):
         print(value)
         if get_content_type(value) not in valid_content_types:
             print(value)
-            raise serializers.ValidationError("Invalid or corrupted document.")
+            raise serializers.ValidationError("Documento Inválido ou corrompido")
         return value
 
 
