@@ -35,13 +35,13 @@ class SystemWriteSerializer(serializers.ModelSerializer):
             "blank": "A descrição do sistema é obrigatória."
         }
     )
+
     image = serializers.SlugRelatedField(
         slug_field="attachment_key",
         queryset=Image.objects.all(),
         required=False,
         allow_null=True
     )
-
     class Meta:
         model = System
         fields: list[str] = [
@@ -116,6 +116,7 @@ class OrganWriteSerializer(serializers.ModelSerializer):
             "incorrect_type": "Sistema inválido."
         }
     )
+
     image = serializers.SlugRelatedField(
         slug_field="attachment_key",
         queryset=Image.objects.all(),
@@ -146,3 +147,4 @@ class OrganDetailSerializer(serializers.ModelSerializer):
             "system",
         ]
         depth = 2
+
