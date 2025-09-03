@@ -5,7 +5,7 @@ from core.user.models import User
 # Create your models here.
 
 class Quiz(models.Model):
-    title = models.TextField(null=True, max_length=155)
+    title = models.TextField(null=True, max_length=155, blank=True, default="")
     question = models.TextField()
     system = models.ForeignKey(System, on_delete=models.PROTECT)
 
