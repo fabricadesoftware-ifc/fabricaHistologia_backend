@@ -7,7 +7,7 @@ from core.veterinary.models import Organ, System, Specie
 from core.veterinary.serializers import OrganDetailSerializer, OrganWriteSerializer
 from core.veterinary.serializers import SystemDetailSerializer, SystemWriteSerializer
 from core.veterinary.serializers import SpecieDetailSerializer, SpecieWriteSerializer
-from core.veterinary.filters import OrganFilter 
+from core.veterinary.filters import OrganFilter, SystemFilter, SpecieFilter
 
 @extend_schema(tags=["Organ"])
 class OrganViewSet(ModelViewSet):
@@ -24,6 +24,8 @@ class OrganViewSet(ModelViewSet):
 @extend_schema(tags=["System"])
 class SystemViewSet(ModelViewSet):
     queryset = System.objects.all()
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = SystemFilter
 
     def get_serializer_class(self):
         if self.action in ["list", "retrieve"]:
@@ -35,6 +37,8 @@ class SystemViewSet(ModelViewSet):
 @extend_schema(tags=["Species"])
 class SpeciesViewSet(ModelViewSet):
     queryset = Specie.objects.all()
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = SpecieFilter
 
     def get_serializer_class(self):
         if self.action in ["list", "retrieve"]:

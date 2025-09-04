@@ -4,18 +4,18 @@ from core.quiz.models import Answer, Quiz, Score
 class AnswerFilter(django_filters.FilterSet):
     question_id = django_filters.NumberFilter(field_name='question__id', lookup_expr='exact')
     level = django_filters.NumberFilter(field_name='level', lookup_expr='exact')
-    
+    option = django_filters.CharFilter(field_name='option', lookup_expr='icontains')
     class Meta:
         model = Answer
-        fields = ['question_id']
+        fields = ['question_id', 'option']
 
 class QuizFilter(django_filters.FilterSet):
     system_id = django_filters.NumberFilter(field_name='system__id', lookup_expr='exact')
-    
+    question = django_filters.CharFilter(field_name='question', lookup_expr='icontains')
 
     class Meta:
         model = Quiz
-        fields = ['system_id', 'level']
+        fields = ['system_id', 'level', 'question']
         
 class ScoreFilter(django_filters.FilterSet):
     user_id = django_filters.NumberFilter(field_name='user__id', lookup_expr='exact')
