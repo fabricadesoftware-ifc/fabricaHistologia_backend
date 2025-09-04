@@ -19,20 +19,6 @@ class QuizViewSet(ModelViewSet):
     queryset = Quiz.objects.all()
     filter_backends = [DjangoFilterBackend]
     filterset_class = QuizFilter
-    
-    def get_serializer_class(self):
-        if self.action in ["list"]:            
-            return QuizDetailSerializer
-        elif self.action in ["retrieve"]:
-            return QuizDetailSerializer
-        return QuizWriteSerializer
-
-
-@extend_schema(tags=["Quiz"])
-class QuizViewSet(ModelViewSet):
-    queryset = Quiz.objects.all()
-    filter_backends = [DjangoFilterBackend]
-    filterset_class = QuizFilter
 
     def get_serializer_class(self):
         if self.action in ["list", "retrieve"]:

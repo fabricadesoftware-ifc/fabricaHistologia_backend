@@ -9,13 +9,15 @@ from rest_framework.decorators import api_view
 from django_filters.rest_framework import DjangoFilterBackend
 
 from core.user.models import User, PersonalData, Address
-from core.user.serializers import UserSerializer, PersonalDataWriteSerializer, PersonalDataDetailSerializer, PersonalDataListSerializer, AddressDetailSerializer, AddressWriteSerializer
-from core.user.filters import PersonalDataFilter
+from core.user.serializers import UserSerializer, PersonalDataWriteSerializer, PersonalDataDetailSerializer, PersonalDataListSerializer, AddressDetailSerializer
+from core.user.filters import PersonalDataFilter, UserFilter, AddressFilter
 
 class UserViewSet(ModelViewSet):
     queryset = User.objects.all().order_by("id")
     serializer_class = UserSerializer
     permission_classes = [customVerifiedPermission]
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = UserFilter
 
     @action(detail=False, methods=["get"], permission_classes=[IsAuthenticated])
     def me(self, request):
@@ -25,15 +27,10 @@ class UserViewSet(ModelViewSet):
 
 class AddressViewSet(ModelViewSet):
     queryset = Address.objects.all()
-    serializer_class = AddressWriteSerializer
+    serializer_class = AddressDetailSerializer
     permission_classes = [IsAuthenticated]
-
-    def get_serializer_class(self):
-        if self.action in ["list"]:
-            return AddressDetailSerializer
-        elif self.action in ["retrieve"]:
-            return AddressDetailSerializer
-        return AddressWriteSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = AddressFilter
 
 @api_view(['GET'])
 def verify_user(request, verification_token):
