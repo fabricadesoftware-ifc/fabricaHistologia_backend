@@ -50,7 +50,6 @@ class PointWriteSerializer(serializers.ModelSerializer):
         }
     )
     posts = serializers.PrimaryKeyRelatedField(
-        many=True,
         queryset=Posts.objects.all(),
         required=True,
         error_messages={
