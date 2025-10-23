@@ -68,9 +68,12 @@ class ScoreViewSet(ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     filterset_class = ScoreFilter
     
+@extend_schema(tags=["Top Scores"])
 class TopScoresView(ModelViewSet):
-    queryset = Score.objects.all().order_by('-answer_time')[:10]
     serializer_class = ScoreDetailSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_class = ScoreFilter
     http_method_names = ['get']
+
+    def get_queryset(self):
+        return Score.objects.all().order_by('-answer_time')[:10]
