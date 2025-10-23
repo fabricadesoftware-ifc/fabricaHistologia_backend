@@ -69,7 +69,7 @@ class ScoreViewSet(ModelViewSet):
     filterset_class = ScoreFilter
     
 class TopScoresView(ModelViewSet):
-    queryset = Score.objects.all().order_by('-score')[:10]
+    queryset = Score.objects.all().order_by('-answer_time')[:10]
     serializer_class = ScoreDetailSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_class = ScoreFilter
