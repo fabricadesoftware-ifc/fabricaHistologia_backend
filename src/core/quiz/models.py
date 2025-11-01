@@ -45,6 +45,7 @@ class Score(models.Model):
     type = models.IntegerField(choices=type_choices)
     level = models.IntegerField(choices=levels, null=True, blank=True)
     system = models.ForeignKey(System, on_delete=models.PROTECT, blank=True, null=True, related_name="score_system")
+    score = models.IntegerField(default=0)
     
     def __str__(self):
         return f"{self.user} - {self.answer_time}"
