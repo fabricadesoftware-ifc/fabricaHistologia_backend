@@ -117,55 +117,18 @@ class AnswerWriteSerializer(serializers.ModelSerializer):
 # ------------------- SCORE SERIALIZERS -------------------
 
 class ScoreDetailSerializer(serializers.ModelSerializer):
-    user = serializers.PrimaryKeyRelatedField(
-        queryset=User.objects.all(),
-        required=True,
-        error_messages={
-            "required": "O usuário é obrigatório.",
-            "does_not_exist": "Usuário inválido.",
-            "incorrect_type": "Usuário inválido."
-        }
-    )
-    answer_time = serializers.IntegerField(
-        required=True,
-        error_messages={
-            "required": "O tempo de resposta é obrigatório.",
-            "invalid": "Tempo de resposta inválido."
-        }
-    )
-    type = serializers.CharField(
-        required=True,
-        allow_blank=False,
-        error_messages={
-            "required": "O tipo de quiz é obrigatório.",
-            "blank": "O tipo de quiz não pode ficar em branco."
-        }
-    )
-    level = serializers.CharField(
-        required=True,
-        allow_blank=False,
-        error_messages={
-            "required": "O nível do quiz é obrigatório.",
-            "blank": "O nível do quiz não pode ficar em branco."
-        }
-    )
-    system = serializers.PrimaryKeyRelatedField(
-        queryset=System.objects.all(),  
-        required=True,
-        error_messages={
-            "required": "O sistema relacionado é obrigatório.",
-            "does_not_exist": "Sistema inválido.",
-            "incorrect_type": "Sistema inválido."
-        }
-    )
+    email = serializers.EmailField(source="user.email", read_only=True)
 
     class Meta:
         model = Score
-        fields: list[str] = [
+        fields = [
             "id",
-            "user",
+            "user",          # ainda envia o id
+            "email",         # envia também o e-mail
             "answer_time",
             "type",
             "level",
-            "system"
+            "system",
+            "score",
         ]
+
