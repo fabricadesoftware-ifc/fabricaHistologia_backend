@@ -71,35 +71,62 @@ class ScoreViewSet(ModelViewSet):
 @extend_schema(tags=["Top Scores"])
 class TopScoresViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ScoreDetailSerializer
-    queryset = Score.objects.all().select_related("user")  # 🔹 otimiza as queries
+    queryset = Score.objects.all().select_related("user")
 
     @action(detail=False, methods=["get"])
     def ranking(self, request):
         type_ = request.query_params.get("type")
         level = request.query_params.get("level")
+        system = request.query_params.get("system")
         user = request.user
 
-        # 🔹 Base query
         queryset = self.queryset
 
-        # 🔹 Filtro condicional
-        if type_:
-            queryset = queryset.filter(type=type_)
+        # ============================================================
+        # 🔥 REGRAS DO RANKING
+        # type=1 → ranking geral (precisa Level)
+        # type=2 → ranking específico (precisa System)
+        # ============================================================
 
-            # Se for "geral" (type=1), aplica level
-            if str(type_) == "1" and level:
-                queryset = queryset.filter(level=level)
-            # Se for "específico" (type=2), ignora level
-            elif str(type_) == "2":
-                queryset = queryset.filter(level__isnull=True)
+        if not type_:
+            return Response({"detail": "Missing type"}, status=400)
 
-        # 🔹 Ordenação: score desc / tempo asc
+        # ---------------------------
+        # ⭐ RANKING GERAL (type=1)
+        # ---------------------------
+        if str(type_) == "1":
+            if not level:
+                return Response({"detail": "Missing level for type=1"}, status=400)
+
+            queryset = queryset.filter(
+                type=1,
+                level=level,
+                system__isnull=True
+            )
+
+        # ---------------------------
+        # ⭐ RANKING ESPECÍFICO (type=2)
+        # ---------------------------
+        elif str(type_) == "2":
+            if not system:
+                return Response({"detail": "Missing system for type=2"}, status=400)
+
+            queryset = queryset.filter(
+                type=2,
+                system=system,
+                level__isnull=True
+            )
+
+        # ============================================================
+        # 🔥 Ordenação universal: maior score, menor tempo
+        # ============================================================
         queryset = queryset.order_by("-score", "answer_time")
 
-        # 🔹 Top 10
+        # ============================================================
+        # 🔥 Top 10 para exibir
+        # ============================================================
         top_10 = queryset[:10]
 
-        # 🔹 Serialização mínima (eficiente)
         results = [
             {
                 "pos": idx + 1,
@@ -110,13 +137,15 @@ class TopScoresViewSet(viewsets.ReadOnlyModelViewSet):
             for idx, s in enumerate(top_10)
         ]
 
-        # 🔹 Dados do usuário logado
+        # ============================================================
+        # 🔥 Dados do usuário logado
+        # ============================================================
         user_score_data = None
         user_position = None
 
         if user.is_authenticated:
             all_scores = list(queryset)
-            for idx, score in enumerate(all_scores, 1):
+            for idx, score in enumerate(all_scores, start=1):
                 if score.user_id == user.id:
                     user_position = idx
                     user_score_data = {
@@ -127,12 +156,11 @@ class TopScoresViewSet(viewsets.ReadOnlyModelViewSet):
                     }
                     break
 
-        # 🔹 Retorno final
         return Response(
             {
                 "results": results,
                 "user_score": user_position,
                 "user_score_data": user_score_data,
             },
-            status=status.HTTP_200_OK,
+            status=200
         )
