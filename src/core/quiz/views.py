@@ -2,15 +2,14 @@ from django.shortcuts import render
 from drf_spectacular.utils import extend_schema
 
 from django_filters.rest_framework import DjangoFilterBackend
-
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from django.db.models import F
 from core.quiz.models import Answer, Quiz, Score
 from rest_framework.viewsets import ModelViewSet
 from core.quiz.serializers import AnswerDetailSerializer, AnswerWriteSerializer, QuizDetailSerializer, QuizWriteSerializer, ScoreDetailSerializer
 from core.quiz.filters import AnswerFilter, QuizFilter, ScoreFilter
-
-from rest_framework.decorators import action
-from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, viewsets
 from django.db import transaction
 
 
@@ -67,5 +66,101 @@ class ScoreViewSet(ModelViewSet):
     serializer_class = ScoreDetailSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_class = ScoreFilter
-    
-    
+
+
+@extend_schema(tags=["Top Scores"])
+class TopScoresViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = ScoreDetailSerializer
+    queryset = Score.objects.all().select_related("user")
+
+    @action(detail=False, methods=["get"])
+    def ranking(self, request):
+        type_ = request.query_params.get("type")
+        level = request.query_params.get("level")
+        system = request.query_params.get("system")
+        user = request.user
+
+        queryset = self.queryset
+
+        # ============================================================
+        # 🔥 REGRAS DO RANKING
+        # type=1 → ranking geral (precisa Level)
+        # type=2 → ranking específico (precisa System)
+        # ============================================================
+
+        if not type_:
+            return Response({"detail": "Missing type"}, status=400)
+
+        # ---------------------------
+        # ⭐ RANKING GERAL (type=1)
+        # ---------------------------
+        if str(type_) == "1":
+            if not level:
+                return Response({"detail": "Missing level for type=1"}, status=400)
+
+            queryset = queryset.filter(
+                type=1,
+                level=level,
+                system__isnull=True
+            )
+
+        # ---------------------------
+        # ⭐ RANKING ESPECÍFICO (type=2)
+        # ---------------------------
+        elif str(type_) == "2":
+            if not system:
+                return Response({"detail": "Missing system for type=2"}, status=400)
+
+            queryset = queryset.filter(
+                type=2,
+                system=system,
+                level__isnull=True
+            )
+
+        # ============================================================
+        # 🔥 Ordenação universal: maior score, menor tempo
+        # ============================================================
+        queryset = queryset.order_by("-score", "answer_time")
+
+        # ============================================================
+        # 🔥 Top 10 para exibir
+        # ============================================================
+        top_10 = queryset[:10]
+
+        results = [
+            {
+                "pos": idx + 1,
+                "email": s.user.email if s.user else "Desconhecido",
+                "score": s.score or 0,
+                "answer_time": float(s.answer_time or 0),
+            }
+            for idx, s in enumerate(top_10)
+        ]
+
+        # ============================================================
+        # 🔥 Dados do usuário logado
+        # ============================================================
+        user_score_data = None
+        user_position = None
+
+        if user.is_authenticated:
+            all_scores = list(queryset)
+            for idx, score in enumerate(all_scores, start=1):
+                if score.user_id == user.id:
+                    user_position = idx
+                    user_score_data = {
+                        "pos": idx,
+                        "email": score.user.email,
+                        "score": score.score or 0,
+                        "answer_time": float(score.answer_time or 0),
+                    }
+                    break
+
+        return Response(
+            {
+                "results": results,
+                "user_score": user_position,
+                "user_score_data": user_score_data,
+            },
+            status=200
+        )
