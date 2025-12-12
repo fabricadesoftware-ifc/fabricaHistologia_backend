@@ -1,13 +1,13 @@
 from django.shortcuts import render
 from drf_spectacular.utils import extend_schema
-
+from rest_framework.permissions import AllowAny
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.db.models import F
 from core.quiz.models import Answer, Quiz, Score
 from rest_framework.viewsets import ModelViewSet
-from core.quiz.serializers import AnswerDetailSerializer, AnswerWriteSerializer, QuizDetailSerializer, QuizWriteSerializer, ScoreDetailSerializer
+from core.quiz.serializers import AnswerDetailSerializer, AnswerWriteSerializer, QuizDetailSerializer, QuizWriteSerializer, ScoreDetailSerializer, ScoreWriteSerializer
 from core.quiz.filters import AnswerFilter, QuizFilter, ScoreFilter
 from rest_framework import status, viewsets
 from django.db import transaction
@@ -18,6 +18,7 @@ class QuizViewSet(ModelViewSet):
     queryset = Quiz.objects.all()
     filter_backends = [DjangoFilterBackend]
     filterset_class = QuizFilter
+    permission_classes = [AllowAny] 
 
     def get_serializer_class(self):
         if self.action in ["list", "retrieve"]:
@@ -63,9 +64,23 @@ class AnswerViewSet(ModelViewSet):
 @extend_schema(tags=["Score"])
 class ScoreViewSet(ModelViewSet):
     queryset = Score.objects.all().order_by("answer_time")
-    serializer_class = ScoreDetailSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_class = ScoreFilter
+    permission_classes = [AllowAny] 
+
+    def get_serializer_class(self):
+        if self.action in ["list", "retrieve"]:
+            return ScoreDetailSerializer
+        return ScoreWriteSerializer
+
+    def perform_create(self, serializer):
+        total = int(self.request.data.get("total_questions", 0))
+        serializer.save(
+            user=self.request.user,
+            total_questions=total
+        )
+
+
 
 
 @extend_schema(tags=["Top Scores"])
@@ -128,14 +143,16 @@ class TopScoresViewSet(viewsets.ReadOnlyModelViewSet):
         top_10 = queryset[:10]
 
         results = [
-            {
-                "pos": idx + 1,
-                "email": s.user.email if s.user else "Desconhecido",
-                "score": s.score or 0,
-                "answer_time": float(s.answer_time or 0),
-            }
-            for idx, s in enumerate(top_10)
-        ]
+        {
+            "pos": idx + 1,
+            "email": s.user.email if s.user else "Desconhecido",
+            "score": s.score or 0,
+            "answer_time": float(s.answer_time or 0),
+            "total_questions": s.total_questions or 0,   # <-----
+        }
+        for idx, s in enumerate(top_10)
+    ]
+
 
         # ============================================================
         # 🔥 Dados do usuário logado
@@ -153,6 +170,7 @@ class TopScoresViewSet(viewsets.ReadOnlyModelViewSet):
                         "email": score.user.email,
                         "score": score.score or 0,
                         "answer_time": float(score.answer_time or 0),
+                        "total_questions": score.total_questions or 0, 
                     }
                     break
 

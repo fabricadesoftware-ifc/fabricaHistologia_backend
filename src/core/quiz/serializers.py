@@ -130,5 +130,35 @@ class ScoreDetailSerializer(serializers.ModelSerializer):
             "level",
             "system",
             "score",
+            "total_questions", 
         ]
 
+class ScoreWriteSerializer(serializers.ModelSerializer):
+    total_questions = serializers.IntegerField(required=True)
+
+    class Meta:
+        model = Score
+        fields = [
+            "answer_time",
+            "type",
+            "level",
+            "system",
+            "score",
+            "total_questions",
+        ]
+
+
+    def validate(self, data):
+        type_ = data.get("type")
+        level = data.get("level")
+        system = data.get("system")
+
+        # type 1 = precisa level
+        if type_ == 1 and not level:
+            raise serializers.ValidationError({"level": "Level é obrigatório quando type=1"})
+
+        # type 2 = precisa system
+        if type_ == 2 and not system:
+            raise serializers.ValidationError({"system": "System é obrigatório quando type=2"})
+
+        return data
