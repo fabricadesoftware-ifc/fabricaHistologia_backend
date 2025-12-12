@@ -7,14 +7,14 @@ from core.user.models import User
 class Quiz(models.Model):
     title = models.TextField(null=True, max_length=155, blank=True, default="")
     question = models.TextField()
-    system = models.ForeignKey(System, on_delete=models.PROTECT)
+    system = models.ForeignKey(System, on_delete=models.PROTECT, null=True, blank=True)
 
     levels = [
         (1, 'FACIL'),
         (2, 'MEDIO'),
         (3, 'DIFICIL')
     ]
-    level = models.IntegerField(choices=levels)
+    level = models.IntegerField(choices=levels, null=True, blank=True)
     def __str__(self) -> str:
         return f"{self.question}"
 
@@ -46,6 +46,8 @@ class Score(models.Model):
     level = models.IntegerField(choices=levels, null=True, blank=True)
     system = models.ForeignKey(System, on_delete=models.PROTECT, blank=True, null=True, related_name="score_system")
     score = models.IntegerField(default=0)
+    total_questions = models.PositiveIntegerField(default=0)
+
     
     def __str__(self):
         return f"{self.user} - {self.answer_time}"
