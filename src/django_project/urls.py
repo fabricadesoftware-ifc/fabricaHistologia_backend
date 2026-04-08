@@ -7,15 +7,26 @@ from drf_spectacular.views import (
     SpectacularRedocView,
     SpectacularSwaggerView,
 )
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
+from core.user.serializers import CustomTokenObtainPairSerializer
 from core.user.views import verify_user
 from core.posts.views import verify_slide_microscopy_post
 
 from .router import router
 
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+    path("api/token/", CustomTokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("api/verify-user/<str:verification_token>/", verify_user, name="verify-user"),
     path("api/verify-post/<str:verification_token>/", verify_slide_microscopy_post, name="verify-post"),
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),

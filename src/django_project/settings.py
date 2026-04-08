@@ -1,5 +1,6 @@
 from pathlib import Path
 import os
+from datetime import timedelta
 import dj_database_url
 from dotenv import load_dotenv
 from urllib.parse import urlparse
@@ -34,6 +35,7 @@ INSTALLED_APPS = [
     "cloudinary",
     "django_extensions",
     "django_celery_results",
+    "rest_framework_simplejwt",
     "corsheaders",
     "rest_framework",
     "drf_spectacular",
@@ -80,7 +82,9 @@ TEMPLATES = [
 WSGI_APPLICATION = "django_project.wsgi.application"
 
 REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": ("core.user.authentication.TokenAuthentication",),
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
     "DEFAULT_PERMISSION_CLASSES": (
         "django_project.permissions.customDefaultPermission",
     ),
@@ -192,9 +196,11 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "user.User"
 
-PASSAGE_APP_ID = os.getenv("PASSAGE_APP_ID")
-PASSAGE_API_KEY = os.getenv("PASSAGE_API_KEY")
-PASSAGE_AUTH_STRATEGY = os.getenv("PASSAGE_AUTH_STRATEGY")
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(hours=1),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+    "AUTH_HEADER_TYPES": ("Bearer",),
+}
 
 
 EMAIL_BACKEND = os.getenv("EMAIL_BACKEND")

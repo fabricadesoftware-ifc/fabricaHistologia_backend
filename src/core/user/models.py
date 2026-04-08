@@ -8,7 +8,7 @@ from .managers import CustomUserManager
 class User(AbstractUser):
     username = None
     email = models.EmailField(_("e-mail address"), unique=True)
-    passage_id = models.CharField(max_length=255, unique=True)
+    passage_id = models.CharField(max_length=255, unique=True, null=True, blank=True)
     verification_token = models.CharField(max_length=100, blank=True, null=True)
     is_verified = models.BooleanField(default=False)
 

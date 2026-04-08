@@ -1,6 +1,32 @@
 from rest_framework.serializers import ModelSerializer, SlugRelatedField, CharField, PrimaryKeyRelatedField, DateField
 
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
 from .models import User, PersonalData, Address
+
+
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        data["user"] = {
+            "id": self.user.id,
+            "email": self.user.email,
+            "is_verified": self.user.is_verified,
+        }
+        return data
+
+
+class UserRegistrationSerializer(ModelSerializer):
+    password = CharField(write_only=True, required=True)
+
+    class Meta:
+        model = User
+        fields = ["email", "password"]
+
+    def create(self, validated_data):
+        password = validated_data.pop("password")
+        user = User.objects.create_user(**validated_data, password=password)
+        return user
 
 
 class UserSerializer(ModelSerializer):

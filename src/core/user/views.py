@@ -9,7 +9,7 @@ from rest_framework.decorators import api_view
 from django_filters.rest_framework import DjangoFilterBackend
 
 from core.user.models import User, PersonalData, Address
-from core.user.serializers import UserSerializer, PersonalDataWriteSerializer, PersonalDataDetailSerializer, PersonalDataListSerializer, AddressDetailSerializer
+from core.user.serializers import UserSerializer, PersonalDataWriteSerializer, PersonalDataDetailSerializer, PersonalDataListSerializer, AddressDetailSerializer, UserRegistrationSerializer
 from core.user.filters import PersonalDataFilter, UserFilter, AddressFilter
 
 class UserViewSet(ModelViewSet):
@@ -19,11 +19,31 @@ class UserViewSet(ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     filterset_class = UserFilter
 
+    def get_serializer_class(self):
+        if self.action == "register":
+            return UserRegistrationSerializer
+        return UserSerializer
+
+    def get_permissions(self):
+        if self.action == "register":
+            return []
+        return super().get_permissions()
+
     @action(detail=False, methods=["get"], permission_classes=[IsAuthenticated])
     def me(self, request):
         user = request.user
         serializer = UserSerializer(user)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @action(detail=False, methods=["post"], permission_classes=[])
+    def register(self, request):
+        serializer = UserRegistrationSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        return Response(
+            {"message": "Usuário criado com sucesso", "email": user.email},
+            status=status.HTTP_201_CREATED,
+        )
 
 class AddressViewSet(ModelViewSet):
     queryset = Address.objects.all()
