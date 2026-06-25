@@ -3,6 +3,8 @@ from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django_project.permissions import customVerifiedPermission, customDataPermission
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view
 
@@ -11,6 +13,9 @@ from django_filters.rest_framework import DjangoFilterBackend
 from core.user.models import User, PersonalData, Address
 from core.user.serializers import UserSerializer, PersonalDataWriteSerializer, PersonalDataDetailSerializer, PersonalDataListSerializer, AddressDetailSerializer, UserRegistrationSerializer
 from core.user.filters import PersonalDataFilter, UserFilter, AddressFilter
+from tasks.recover_password_code import recover_password_code
+
+import secrets
 
 class UserViewSet(ModelViewSet):
     queryset = User.objects.all().order_by("id")
@@ -44,6 +49,53 @@ class UserViewSet(ModelViewSet):
             {"message": "Usuário criado com sucesso", "email": user.email},
             status=status.HTTP_201_CREATED,
         )
+    
+    @action(detail=False, methods=["post"], permission_classes=[])
+    def forget(self, request):
+        email = request.data.get("email")
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            return Response({'error': 'Usuário não encontrado'}, status=status.HTTP_404_NOT_FOUND)
+
+        user.recover_password_token = ''.join(str(secrets.randbelow(10)) for _ in range(4))
+        user.save()
+        
+        recover_password_code.delay(user.id, user.recover_password_token)
+        
+        return Response(status=status.HTTP_200_OK)
+    
+    @action(detail=False, methods=["post"], permission_classes=[])
+    def recover(self, request):
+        email = request.data.get("email")
+        code = request.data.get("code")
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            return Response({'error': 'Usuário não encontrado'}, status=status.HTTP_404_NOT_FOUND)
+
+        if user.recover_password_token != code or user.recover_password_token is None:
+            return Response({'error': 'Código de recuperação de senha inválido'}, status=status.HTTP_400_BAD_REQUEST)
+
+        password = request.data.get("password")
+        
+        if not password:
+            return Response({'error': 'A senha é obrigatória'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        try:
+            validate_password(password)
+        except ValidationError as e:
+            return Response(
+                {"error": e.messages},
+                status=status.HTTP_400_BAD_REQUEST
+            )        
+            
+        user.set_password(password)
+        
+        user.recover_password_token = None
+        user.save()
+        
+        return Response(status=status.HTTP_200_OK)
 
 class AddressViewSet(ModelViewSet):
     queryset = Address.objects.all()
